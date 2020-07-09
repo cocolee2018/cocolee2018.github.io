@@ -156,19 +156,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-first_post" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-BLE低功耗蓝牙笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/01/first_post/">BLE低功耗蓝牙笔记</a>
+      <a class="article-title" href="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">BLE低功耗蓝牙笔记</a>
     </h1>
   
 
         
-        <a href="/2020/06/01/first_post/" class="archive-article-date">
+        <a href="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/" class="archive-article-date">
   	<time datetime="2020-06-01T13:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-01</time>
 </a>
         
@@ -178,15 +178,17 @@
       
         <p><strong>1.蓝牙协议栈分层</strong></p>
 <ul>
-<li><p>看到的是这样子</p>
+<li><p>看到的是这样子 </p>
+<p><img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image.png" alt="Image"></p>
 </li>
 <li><p>或者这样子</p>
 </li>
 </ul>
-<p>![Image [1]](D:\blog\source\images\Image [1].png)<br>本文将按照如下层次分析<br>§PHY(物理层<br>§LL(链路控制层)<br>§HCI(主机和控制接口)<br>§L2CAP层(逻辑链路控制和适配层)<br>§GATT(通用属性规范)<br>§ATT(属性传输协议)<br>§SMP(安全管理)<br><strong>2.先说一下蓝牙广播</strong><br><strong><em>(1)配置过程</em></strong><br>在BLE程序编写中，必不可少的就是进行蓝牙的广播初始化和配置</p>
-<p>![Image [2]](D:\blog\source\images\Image [2].png)</p>
-<p>广播初始化函数advertising_init（）,定义结构体 advdata 参数如下：<br>advdata.name_type = BLE_ADVDATA_FULL_NAME;//广播时的名称显示 advdata.include_appearance  = true;<br>advdata.flags=BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;//蓝牙设备模式   //LE General Discoverable Mode, BR/EDR not supported.<br><strong>蓝牙BR/EDR（蓝牙基本速率/增强数据率），低功耗是Bluetooth Smart 的亮点之一，所以不支持 BR/EDR。所以注意nrf52832是无法传输音频的。</strong><br>这个里面关键的问题就是广播类型的选择，广播类型有几种，如下图所示（英文解<br>释具体查看官方SDK 说明）：<br> ![Image [3]](D:\blog\source\images\Image [3].png)<br>解释一下：<br>Direct 模式及直连模式，利用的就是ble 中的直连广播，该模式是为了快速重连上刚刚断开的设备，比如利用在快速重连上意外断开的设备，已达到无缝恢复的目的。定向广播。<br>Fast 模式：就是普通的广播，不过连接间隔我们可以设置的快一点。<br>Slow 模式：普通广播，连接间隔设置的慢一点<br>Idle 模式：停止广播。<br><strong><em>（2）广播包</em></strong><br>1)Public address.<br>蓝牙地址的种类。蓝牙协议规定，任何一个蓝牙设备必须拥有一个唯一的48bit 的地址，用以标识标识身份。而且，在广播的时候必须要把蓝牙地址广播出去。蓝牙地址有以下的四种: 1)Public address. Public address 是公司通过IEEE 申请获得的，称为OUI(Organizationally Unique Identifier)。这个地址是固定的地址，全球唯一的，不可以修改。<br>2)Random Static address<br>Random Static address 是设备在上电的时候随机生成或者是芯片厂家在生产芯片的时候随机烧录的不重复的48 bit 的蓝牙地址。nrf52832 的蓝牙地址属于后者。该地址存放在FICR 里面，用户不可以修改。<br>3）Private Non-Resolvable address 和Private Resolvable address 不常用，感兴趣可以翻下蓝牙核心规范<br><strong>3.GAP层的配置</strong><br><strong>（1）通用访问配置文件(Generic Access Profile, GAP)</strong>，该Profile 保证不同Bluetooth 产品可以互相发现对方并建立连接。<br>（GAP）定义了蓝牙设备如何发现和建立与其他设备的安全（或不安全）连接。它处理一些一般模式的业务（如询问、命名和搜索）和一些安全性问题（如担保），同时还处理一些有关连接的业务（如链路建立、信道和连接建立。<br>     在一个典型的蓝牙系统中，外围设备发送具体的广告数据让任何中央设备知道他是一个可连接的设备。广告内容包含设备地址，还可以包含一些额外的额数据，比如设备名称。<br>      中央设备接收到广告后发送一个搜索请求给外围设备，外围设备答复一个搜索答复。这就是设备发现的过程，这样中央设备就知道外围设备是一个可连接的设备。中央设备可以发送一个建立连接的请求给外围设备，一个连接情况包含一些连接参数。<br>（2）蓝牙链接参数的更新<br>下图为链路控制和适配协议链接参数更新请求和响应命令。在链接中，如果从设<br>备希望修改当前的链接参数则可以使用该命令<br>![Image [4]](D:\blog\source\images\Image [4].png)<br>在链路层的连接配置过程完成后，链接参数connInterval，connSlaceLatency 和connTimeout 参数可以实现更新。主设备通过发CONN_PARAM_UPDATE_REQ 数据包去完成更新，而从设备则通过Host 层的处理去影响这些参数。本讲主要是探讨如何设置从机更新请求过程，因为整个更新必须从机发起申请，再由主机发起更新。<br>    从机设备可以在任何时候发送链接参数更新请求命令。收到该信息的主设备如果可以修改链接参数，则将返回链接参数更应答命令，其中的结果代码设置为接受。然后 主设备将会启动链路层链接参数更新控制规程对链接参数进行更新。<br>    <strong>（3）UUID是什么？</strong><br>    UUID 含义是通用唯一识别码(Universally Unique Identifier)，这是一个软件建构的标准。UUID 是指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。所有的蓝牙技术联盟定义UUID 共用了一个基本的UUID：0x0000xxxx-0000-1000-8000-00805F9B34FB   ;;也有如下解释：<br>![Image [5]](D:\blog\source\images\Image [5].png)<br>如何配置UUID呢？</p>
-<p>![Image [6]](D:\blog\source\images\Image [6].png)</p>
+<p><img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image1.png" alt="Image1"><br>本文将按照如下层次分析<br>§PHY(物理层<br>§LL(链路控制层)<br>§HCI(主机和控制接口)<br>§L2CAP层(逻辑链路控制和适配层)<br>§GATT(通用属性规范)<br>§ATT(属性传输协议)<br>§SMP(安全管理)<br><strong>2.先说一下蓝牙广播</strong><br><strong>(1)配置过程</strong><br>在BLE程序编写中，必不可少的就是进行蓝牙的广播初始化和配置</p>
+<p><img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image2.png" alt="Image2"></p>
+<p>广播初始化函数advertising_init（）,定义结构体 advdata 参数如下：<br>advdata.name_type = BLE_ADVDATA_FULL_NAME;//广播时的名称显示 advdata.include_appearance  = true;<br>advdata.flags=BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;//蓝牙设备模式   //LE General Discoverable Mode, BR/EDR not supported.<br><strong>蓝牙BR/EDR（蓝牙基本速率/增强数据率），低功耗是Bluetooth Smart 的亮点之一，所以不支持 BR/EDR。所以注意nrf52832是无法传输音频的。</strong><br>这个里面关键的问题就是广播类型的选择，广播类型有几种，如下图所示（英文解<br>释具体查看官方SDK 说明）：<br> <img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image3.png" alt="Image3"><br>解释一下：<br>Direct 模式及直连模式，利用的就是ble 中的直连广播，该模式是为了快速重连上刚刚断开的设备，比如利用在快速重连上意外断开的设备，已达到无缝恢复的目的。定向广播。<br>Fast 模式：就是普通的广播，不过连接间隔我们可以设置的快一点。<br>Slow 模式：普通广播，连接间隔设置的慢一点<br>Idle 模式：停止广播。<br><strong>（2）广播包</strong><br>1)Public address.<br>蓝牙地址的种类。蓝牙协议规定，任何一个蓝牙设备必须拥有一个唯一的48bit 的地址，用以标识标识身份。而且，在广播的时候必须要把蓝牙地址广播出去。蓝牙地址有以下的四种: 1)Public address. Public address 是公司通过IEEE 申请获得的，称为OUI(Organizationally Unique Identifier)。这个地址是固定的地址，全球唯一的，不可以修改。<br>2)Random Static address<br>Random Static address 是设备在上电的时候随机生成或者是芯片厂家在生产芯片的时候随机烧录的不重复的48 bit 的蓝牙地址。nrf52832 的蓝牙地址属于后者。该地址存放在FICR 里面，用户不可以修改。<br>3）Private Non-Resolvable address 和Private Resolvable address 不常用，感兴趣可以翻下蓝牙核心规范<br><strong>3.GAP层的配置</strong><br><strong>（1）通用访问配置文件(Generic Access Profile, GAP)</strong>，该Profile 保证不同Bluetooth 产品可以互相发现对方并建立连接。<br>（GAP）定义了蓝牙设备如何发现和建立与其他设备的安全（或不安全）连接。它处理一些一般模式的业务（如询问、命名和搜索）和一些安全性问题（如担保），同时还处理一些有关连接的业务（如链路建立、信道和连接建立。<br>     在一个典型的蓝牙系统中，外围设备发送具体的广告数据让任何中央设备知道他是一个可连接的设备。广告内容包含设备地址，还可以包含一些额外的额数据，比如设备名称。<br>      中央设备接收到广告后发送一个搜索请求给外围设备，外围设备答复一个搜索答复。这就是设备发现的过程，这样中央设备就知道外围设备是一个可连接的设备。中央设备可以发送一个建立连接的请求给外围设备，一个连接情况包含一些连接参数。<br><strong>（2）蓝牙链接参数的更新</strong><br>下图为链路控制和适配协议链接参数更新请求和响应命令。在链接中，如果从设<br>备希望修改当前的链接参数则可以使用该命令<br>![Image4(BLE低功耗蓝牙笔记/Image4.png)<br>在链路层的连接配置过程完成后，链接参数connInterval，connSlaceLatency 和connTimeout 参数可以实现更新。主设备通过发CONN_PARAM_UPDATE_REQ 数据包去完成更新，而从设备则通过Host 层的处理去影响这些参数。本讲主要是探讨如何设置从机更新请求过程，因为整个更新必须从机发起申请，再由主机发起更新。<br>    从机设备可以在任何时候发送链接参数更新请求命令。收到该信息的主设备如果可以修改链接参数，则将返回链接参数更应答命令，其中的结果代码设置为接受。然后 主设备将会启动链路层链接参数更新控制规程对链接参数进行更新。<br>    <strong>UUID是什么？</strong><br>    UUID 含义是通用唯一识别码(Universally Unique Identifier)，这是一个软件建构的标准。UUID 是指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。所有的蓝牙技术联盟定义UUID 共用了一个基本的UUID：0x0000xxxx-0000-1000-8000-00805F9B34FB   ;;也有如下解释：<br><img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image5.png" alt="Image5"><br>如何配置UUID呢？</p>
+<p><img src="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image6.png" alt="Image6"></p>
+<p>SoftDevice 根据蓝牙技术联盟定义UUID 类似的方式定义UUID：先增加一个特定的基本UUID，再定义一个16 位的UUID（类似于一个别名），再加载在基本UUID之上。这种采用为所有的定制属性定义一个共用的基本UUID 的方式使得应用变为更加简单，至少在同一服务中更是如此。<br>       使用软件nRFgo Studio 非常容易产生一个新的基本UUID,生成过程如下：UUID 需要重新设置，因为本服务中将要使用一个定制（私有）的UUID，以代替蓝牙技术联盟所定义的UUID。首先，先定义一个基本UUID，一种方式是采用nRFgo Studio 来生成。下次我们再学习和分析…</p>
 
       
 
@@ -195,11 +197,332 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BLE</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/BLE//" class="article-tag-list-link color4">BLE</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/01/first_post/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/06/01/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-RTT操作系统笔记___第三季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/">RTT国产物联网操作系统笔记----第三季</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/" class="archive-article-date">
+  	<time datetime="2020-05-17T11:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="RTT操作系统笔记—-第三季"><a href="#RTT操作系统笔记—-第三季" class="headerlink" title="RTT操作系统笔记—-第三季"></a>RTT操作系统笔记—-第三季</h4><p>RTT中的内存管理</p>
+<p>在计算系统中，变量、中间数据一般存放在系统存储空间中，只有在实际使用时才将它们从存储空间调入到中央处理器内部进行运算。通常存储空间可以分为两种：内部存储空间和外部存储空间。内部存储空间访问速度比较快，能够按照变量地址随机地访问，也就是我们通常所说的RAM（随机存储器），或电脑的内存；而外部存储空间内所保存的内容相对来说比较固定，即使掉电后数据也不会丢失，可以把它理解为电脑的硬盘。在这一章中我们主要讨论内部存储空间（RAM）的管理——内存管理。</p>
+<p>​     动态分配内存与静态分配内存的区别：静态内存一旦创建就指定了内存块的大小，分配只能以内存块大小粒度进行分配；动态内存分配则根据运行时环境确定需要的内存块大小，按照需要分配内存。内核负责给内存池分配内存池对象控制块，它同时也接收用户线程的分配内存块申请，当获得申请信息后，内核就可以从内存池中为线程分配内存块。内存池一旦初始化完成，内部的内存块大小将不能再做调整，具体见下图：</p>
+<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/7.png" alt="7"></p>
+<p> 小内存管理算法是一个简单的内存分配算法。初始时，它是一块大的内存，其大小为（MEM_SIZE），当需要分配内存块时，将从这个大的内存块上分割出相匹配的内存块，然后把分割出来的空闲内存块还回给堆管理系统中。每个内存块都包含一个管理用的数据头，通过这个头把使用块与空闲块用双向链表的方式链接起来（内存块链表），具体见下图：</p>
+<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/8.png" alt="8"></p>
+<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/99.png" alt="99"></p>
+<p>每个内存块（不管是已分配的内存块还是空闲的内存块）都包含一个数据头，其中包括：</p>
+<p><strong>magic – 变数（或称为幻数</strong>），它会被初始化成0x1ea0（即英文单词heap），用于标记这个内存块是一个内存管理用的内存数据块；</p>
+<p><strong>used -</strong> 指示出当前内存块是否已经分配。<br>magic变数不仅仅用于标识这个数据块是一个内存管理用的内存数据块，实质也是一个内存保护字：如果这个区域被改写，那么也就意味着这块内存块被非法改写（正常情况下只有内存管理器才会去碰这块内存）。</p>
+<p>   静态内存管理是当用户需要使用固定长度的内存时，可以使用静态内存分配的方式获取内存，一旦使用完毕，通过静态内存释放函数归还所占用内存，使之可以重复使用。<br>例如我们需要定义一个float型数组：float Arr[];  但是，在使用数组的时候，总有一个问题困扰着我们：数组应该有多大？在很多的情况下，你并不能确定要使用多大的数组，可能为了避免发生错误你就需要把数组定义得足够大。即使你知道想利用的空间大小，但是如果因为某种特殊原因空间利用的大小有增加或者减少，你又必须重新去修改程序，扩大数组的存储范围。这种分配固定大小的内存分配方法称之为静态内存分配。这种内存分配的方法存在比较严重的缺陷，在大多数情况下会浪费大量的内存空间，在少数情况下，当你定义的数组不够大时，可能引起下标越界错误，甚至导致严重后果。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-RTT操作系统笔记___第二季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/">RTT国产物联网操作系统笔记----第二季</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/" class="archive-article-date">
+  	<time datetime="2020-04-24T13:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="RTT操作系统笔记—-第二季"><a href="#RTT操作系统笔记—-第二季" class="headerlink" title="RTT操作系统笔记—-第二季"></a>RTT操作系统笔记—-第二季</h4><p>RTT中的信号量</p>
+<p>信号量（Semaphore）是一种实现线程间通信的机制，实现线程之间同步或临界资源的互斥访问，常用于协助一组相互竞争的线程来访问临界资源。在多线程系统中，各线程之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。</p>
+<p>信号量获取，从创建的信号量资源中获取一个信号量，获取成功返回正确。否则线程会等待其它线程释放该信号量，超时时间由用户设定。当线程获取信号量失败时，线程将进入阻塞态，系统将线程挂到该信号量的阻塞列表中。在二值信号量无效的时候，假如此时有线程获取该信号量的话，那么线程将进入阻塞状态，具体见图 </p>
+<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/1.png" alt="1"></p>
+<p>假如某个时间中断/线程释放了信号量，其过程具体见下图，那么，由于获取无效信号量而进入阻塞态的线程将获得信号量并且恢复为就绪态，其过程具体见下图：</p>
+<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/2.png" alt="2"></p>
+<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/3.png" alt="3"></p>
+<p>计数型信号量与二值信号量其实都是差不多的，一样用于资源保护，不过计数信号量则允许多个线程获取信号量访问共享资源，但会限制线程的最大数目。访问的线程数达到信号量可支持的最大数目时，会阻塞其他试图获取该信号量的线程，直到有线程释放了信号量。这就是计数型信号量的运作机制，虽然计数信号量允许多个线程访问同一个资源，但是也有限定，比如某个资源限定只能有3 个线程访问，那么第4 个线程访问的时候，会因为获取不到信号量而进入阻塞，等到有线程（比如线程1）释放掉该资源的时候，第4个线程才能获取到信号量从而进行资源的访问，其运作的机制具体见图</p>
+<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/4.png" alt="4"></p>
+<p>说到信号量的使用就不得不说一下信号量的控制块了，信号量控制块与线程控制类似，<br>每一个信号量都有自己的信号量控制块，信号量控制块中包含了信号量的所有信息，比如<br>信号量的一些状态信息，使用情况等，具体见代码清单，信号量控制块部分</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_semaphore</span> &#123;</span></span><br><span class="line"><span class="number">2</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span> <span class="comment">/**&lt; 继承自ipc_object 类*/</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rt_uint16_t</span> value; <span class="comment">/**&lt; 信号量的值，最大为65535 */</span></span><br><span class="line"><span class="number">5</span> &#125;;</span><br><span class="line"><span class="number">6</span> <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_semaphore</span> *<span class="title">rt_sem_t</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>二值信号量的创建很简单，因为创建的是二值的信号量，所以该信号量的容量只有一个，其可用信号量个数要么是0，要么是1，而计数信号量则可以由用户决定在创建的时候初始化多少个可用信号量，其源码具体见代码清单：信号量创建函数rt_sem_create()源码部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">rt_sem_t</span> <span class="title">rt_sem_create</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, (<span class="number">1</span>)</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">2</span> <span class="keyword">rt_uint32_t</span> value, (<span class="number">2</span>)</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">3</span> <span class="keyword">rt_uint8_t</span> flag)</span> <span class="params">(<span class="number">3</span>)</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span> <span class="keyword">rt_sem_t</span> sem;</span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span> RT_DEBUG_NOT_IN_INTERRUPT;</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span> <span class="comment">/* 分配内核对象 */</span></span><br><span class="line"><span class="number">10</span> sem = (<span class="keyword">rt_sem_t</span>)rt_object_allocate(RT_Object_Class_Semaphore, name);</span><br><span class="line"><span class="number">11</span> <span class="keyword">if</span> (sem == RT_NULL) (<span class="number">4</span>)</span><br><span class="line"><span class="number">12</span> <span class="keyword">return</span> sem;</span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span> <span class="comment">/* 初始化信号量对象 */</span></span><br><span class="line"><span class="number">15</span> rt_ipc_object_init(&amp;(sem-&gt;parent)); (<span class="number">5</span>)</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">17</span> <span class="comment">/* 设置可用信号量的值 */</span></span><br><span class="line"><span class="number">18</span> sem-&gt;value = value; (<span class="number">6</span>)</span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">20</span> <span class="comment">/* 设置信号量模式 */</span></span><br><span class="line"><span class="number">21</span> sem-&gt;parent.parent.flag = flag; (<span class="number">7</span>)</span><br><span class="line"><span class="number">22</span></span><br><span class="line"><span class="number">23</span> <span class="keyword">return</span> sem; (<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+
+<p>代码清单 19-2(1)：信号量名称。<br>代码清单 19-2(2)：可用信号量初始值。<br>代码清单 19-2(3)：信号量标志。<br>代码清单 19-2(4)：分配消息队列对象，调用rt_object_allocate 此函数将从对象系统分配对象，为创建的消息队列分配一个消息队列的对象，并且命名对象名称， 在系统中，对象的名称必须是唯一的。<br>代码清单 19-2(5)：初始化信号量对象。此处会初始化一个链表用于记录访问此信号量而阻塞的线程。</p>
+<p>代码清单 19-2(6)：设置可用信号量的初始值。表示在创建成功的时候有多少个信号量可用，如果创建的是二值信号量，其取值范围为[0,1]，如果是计数信号量，其取值范围为[0,65535]。<br>代码清单 19-2(7)：设置信号量的阻塞唤醒模式，创建的信号量由于指定的flag 不同，而有不同的意义： 使用RT_IPC_FLAG_PRIO 优先级flag 创建的IPC 对象，在多个线程等待信号量资源时，将由优先级高的线程优先获得资源。而使用RT_IPC_FLAG_FIFO 先进先出flag 创建的IPC 对象，在多个线程等信号量待资源时，将按照先来先得的顺序获得资源。RT_IPC_FLAG_PRIO 与RT_IPC_FLAG_FIFO 均在rtdef.h 中有定义.</p>
+<p>代码清单 19-2(8)：创建成功返回信号量句柄。通过上面的信号量创建的学习，在创建信号量的时候，我们只需要传入我们的信号量名称、初始化的值和阻塞唤醒发生即可。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-RTT操作系统笔记___第一季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/">RTT国产物联网操作系统笔记----第一季</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/" class="archive-article-date">
+  	<time datetime="2020-04-05T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="RTT国产物联网操作系统笔记—-第一季"><a href="#RTT国产物联网操作系统笔记—-第一季" class="headerlink" title="RTT国产物联网操作系统笔记—-第一季"></a>RTT国产物联网操作系统笔记—-第一季</h4><h5 id="1-裸机系统与多线程系统："><a href="#1-裸机系统与多线程系统：" class="headerlink" title="1.裸机系统与多线程系统："></a>1.裸机系统与多线程系统：</h5><p>   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。<br>     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的处理是在线程中完成的。在多线程系统中，线程跟中断一样，也具有优先级，优先级高的线程会被优先执行。当一个紧急的事件在中断被标记之后，如果事件对应的线程的优先级足够高，就会立马得到响应。相比前后台系统，多线程系统的实时性又被提高了。<br>     调度器是操作系统的核心，其主要功能就是实现线程的切换，即从就绪列表里面找到优先级最高的线程，然后去执行该线程。从代码上来看，调度器无非也就是由几个全局变量和一些可以实现线程切换的函数组成，全部都在scheduler.c文件中实现。</p>
+<h5 id="2-线程栈初始化："><a href="#2-线程栈初始化：" class="headerlink" title="2.线程栈初始化："></a>2.线程栈初始化：</h5><p>。如果只是单纯的裸机编程，它们放哪里我们不用管，但是如果要写一个RTOS，这些种种环境参数，我们必须弄清楚他们是如何存储的。在裸机系统中，他们统统放在一个叫栈的地方，栈是单片机RAM里面一段连续的内存空间，栈的大小一般在启动文件或者链接脚本里面指定，最后由C库函数_main进行初始化</p>
+<h5 id="main启动过程"><a href="#main启动过程" class="headerlink" title="main启动过程"></a>main启动过程</h5><p>​       一个工程如果没有main函数是编译不成功的，会出错。因为系统在开始执行的时候先执行启动文件里面的复位程序，复位程序里面会调用C库函数<strong>main，</strong>main的作用是初始化好系统变量，如全局变量，只读的，可读可写的等等。<strong>main最后会调用</strong>rtentry，再由__rtentry调用main函数，从而由汇编跳入到C的世界，这里面的main函数就需要我们手动编写，如果没有编写main函数，就会出现main函数没有定义的错误。</p>
+<p>  正如我们所说的那样，线程是一个独立的、无限循环且不能返回的函数。 线程的栈，线程的函数实体，线程的控制块最终需要联系起来才能由系统进行统一调度。</p>
+<p>  以小写的rt开头，表示这是一个外部函数，可以由用户调用，以_rt开头的函数表示内部函数，只能由RT-Thread内部使用RT-thread的五种状态，RT-Thread 系统中的每一个线程都有多种运行状态，他们之间的转换关系是怎么样的呢？从运行态线程变成阻塞态，或者从阻塞态变成就绪态，这些线程状态是怎么迁移的呢。</p>
+<p><img src="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/TI20200709180954.png" alt="TI20200709180954"></p>
+<h5 id="3-消息队列："><a href="#3-消息队列：" class="headerlink" title="3.消息队列："></a>3.消息队列：</h5><p>创建消息队列时先创建一个消息队列对象控制块，然后给消息队列分配一块内存空间，组织成空闲消息链表，这块内存的大小等于[消息大小+消息头（用于链表连接）]与消息队列容量的乘积，接着再初始化消息队列，此时消息队列为空。RT-Thread 操作系统的消息队列对象由多个元素组成，当消息队列被创建时，它就被分配了消息队列控制块：消息队列名称、内存缓冲区、消息大小以及队列长度等。同时每个消息队列对象中包含着多个消息框，每个消息框可以存放一条消息。</p>
+<p>发送紧急消息的过程与发送消息几乎一样，唯一的不同是，当发送紧急消息时，从空闲消息链表上取下来的消息块不是挂到消息队列的队尾，而是挂到队首，这样，接收者就能够优先接收到紧急消息，从而及时进行消息处理。<br>      读取消息时，根据msg_queue_head 找到最先入队列中的消息节点进行读取。根据消息队列控制块中的entry 判断队列是否有消息读取，对全部空闲（entry 为0）队列进行读消息操作会引起线程挂起。当消息队列不再被使用时，应该删除它以释放系统资源，一旦操作完成，消息队列将被永久性的删除。</p>
+<p><img src="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/T200709181334.png" alt="T200709181334"></p>
+<p>我们使用的消息队列一般不是属于某个线程的队列，在很多时候，我们创建的队列，是每个线程都可以去对他进行读写操作的，但是为了保护每个线程对它进行读写操作的过程，我们必须要有阻塞机制，在某个线程对它读写操作的时候，必须保证该线程能正常完成读写操作，而不受后来的线程干扰，凡事都有先来后到嘛！</p>
+<p>而在发送消息操作的时候，为了保护数据，当且仅当空闲消息链表上有可用的空闲消息块时，发送者才能成功发送消息；当空闲消息链表上无可用消息块，说明消息队列已满，此时，发送消息的的线程或者中断程序会收到一个错误码（-RT_EFULL），发送消息并不带有阻塞机制的，因为发送消息的环境可能是在中断中，不允许有阻塞的情况。消息队列可以应用于发送不定长消息的场合，包括线程与线程间的消息交换，以及在中断服务函数中给线程发送消息（中断服务例程不可能接收消息）。</p>
+<p>消息队列控制块包含了每个消息队列的信息，如消息队列名称、内存缓冲区、消息大<br>小以及队列长度等，是很重要的一个内核对象控制块，具体见代码清单 18-1。</p>
+<p>代码清单 18-1 消息队列控制块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_messagequeue</span> &#123;</span></span><br><span class="line"><span class="number">2</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span> (<span class="number">1</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">void</span> *msg_pool; (<span class="number">2</span>)</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span> <span class="keyword">rt_uint16_t</span> msg_size; (<span class="number">3</span>)</span><br><span class="line"><span class="number">7</span> <span class="keyword">rt_uint16_t</span> max_msgs; (<span class="number">4</span>)</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span> <span class="keyword">rt_uint16_t</span> entry; (<span class="number">5</span>)</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">11</span> <span class="keyword">void</span> *msg_queue_head; (<span class="number">6</span>)</span><br><span class="line"><span class="number">12</span> <span class="keyword">void</span> *msg_queue_tail; (<span class="number">7</span>)</span><br><span class="line"><span class="number">13</span> <span class="keyword">void</span> *msg_queue_free; (<span class="number">8</span>)</span><br><span class="line"><span class="number">14</span> &#125;;</span><br><span class="line"><span class="number">15</span> <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_messagequeue</span> *<span class="title">rt_mq_t</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>代码清单 18-1(1)：消息队列属于内核对象，会在自身结构体里面包含一个内核对象类型<br>的成员，通过这个成员可以将消息队列挂到系统对象容器里面。<br>代码清单 18-1(2)：存放消息的消息池开始地址。<br>代码清单 18-1(3)：每条消息大小，消息队列中也就是节点的大小，单位为字节。<br>代码清单 18-1(4)：能够容纳的最大消息数量。<br>代码清单 18-1(5)：队列中的消息索引，记录消息队列的消息个数。<br>代码清单 18-1(6)：链表头指针，指向即将读取数据的节点。</p>
+<p>代码清单 18-1(7)：链表尾指针，指向允许写入数据的节点<br>代码清单 18-1(8)：指向队列的空闲节点的指针。</p>
+<p>​                                                                        <strong><em>以上代码来自野火的RT-Thread教程，使用请注明出处。</em></strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/">展开全文 >></a>
         </p>
       
 
@@ -320,6 +643,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">BLE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
