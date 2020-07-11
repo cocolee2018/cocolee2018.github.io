@@ -158,6 +158,102 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-云看护物联网系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/">研电赛总结</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+  	<time datetime="2020-06-23T13:54:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>2019年研电赛总结</strong></p>
+<p>今天实验室的同学问了我几个关于研电赛的事情，让我回忆起去年这个时候，想起之前那段忙碌又开心的时光。同样是学期末的时候，我和研二的师兄师姐一起准备了19年的电赛，20年的这时候我已经在公司实习了，只能感觉时光荏苒！其实参加这次研电赛好像还是我们课题组第一次参加（之前导师在国外，可能没在意这个事），总体来说这次比赛还是学到了蛮多东西。同时在此也希望实验室师弟师妹们再创佳绩！</p>
+<p>下面大概总结下去年参加比赛的项目和技术细节：一个完整的物联网系统包括三部分，感知层，网络层和应用层。主控芯片选择物联网套件，采用STM32和NodeMCU进行相应开发。针对终端所在场景做出相应的传感器设备开发，完成养老院看护场景下特定需求，包括DHT11温湿度模块、Pulse Sensor心率传感器模块、MAX30205MTA人体温度传感器模块、WiFi模块，实现云平台与终端传感器模块的数据透传。终端传感器设计可分为三个部分，第一部分MCU采用NodeMCU和STM32做主控，硬件流程全部由MCU控制。第二部分是ESP8266通信模块，该模块与MCU采用串口通信，MCU通过串口向通信模块发送指令完成入网，云平台注册、通信和数据传输等过程。第三部分是传感器环境感知部分，通过MCU控制传感器采集环境及人体数据传递给通信模块并上传至云平台。</p>
+<h5 id="终端主控和传感器"><a href="#终端主控和传感器" class="headerlink" title="终端主控和传感器"></a>终端主控和传感器</h5><p>感知层设计了硬件传感器终端，主要依靠Arduino主板、温湿度模块、光照传感器模块、心率传感器模块、人体温度传感器模块采集房间环境及人体数据。Pulse Sensor 是一款用于心率测量、脉搏波形测量和 HRV 分析的光电反射式模拟传感器。程序主要通过串口输出数据，数据格式均为 ASCII 码，由于数据量较大，采用的波特率为 115200。其中包含三种数据：以“S”为前缀的，表示脉搏波原始数据（脉象图的数值化表示）；以“B”为前缀的，表示 BPM 数值（心率值）；以“Q”为前缀的，表示 IBI数值（相邻两个心跳之间的时间，以毫秒为单位）；使用的模块实物图如下：</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/111.png" alt="111"></p>
+<p>MAX30205温度传感器可高精度测量温度，器件利用高分辨率的模/数转换器将温度测量值转换为数字形式，通过I2C兼容2线串行接口进行通信。I2C串行接口读取温度数据以及配置开漏过热关断输出模式。传感器采用2.7V至3.3V供电电压范围、600µA低供电电流、锁定保护I2C兼容接口，使其成为穿戴式健身和医疗应用传感器的理想选择。MAX30205根据典型的外围电路图连接后组成单独的温度测试的模块，只需引出VCC,GND,SDA,SCL引脚即可实现测试功能。推荐电路图如下：</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/222.png" alt="222"></p>
+<p>DHT11数字温湿度传感器是一款含有已校准数字信号输出的温湿度复合传感器。平常也经常用到主要是便宜，某宝上几块钱一个。如下图，传感器引脚顺序从左到右依次为 VCC、DAT、NC、GND，DHT11的供电电压为 3－5.5V。电源引脚(VDD和引脚1)之间可增加一个100nF的电容用以去耦滤波。</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/333.png" alt="333"></p>
+<p>GY-30数字光强度感光模块主要由BH1750FVI集成芯片和集成外围电路构成，根据电路连接方式可以实现不同操作功能，其中BH1750FVI是一种用于两线式串行总线接口的数字型光强度传感器集成电路，用它的高分辨率可以探测较大范围的光强度变化。GY-30数字光强度感光模块内部结构如下:</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/qq.png" alt="qq"></p>
+<p>人体体温和心率的检测电路，电路具有上电复位功能，终端传感器主要组成构件有Pulse Sensor心率传感器和MAX30205MTA人体温度传感器。Pulse Sensor心率传感器的S引脚输出模拟电信号来类比测出的脉搏信号，连接STM32电路板的上的Pin2,也就是ESP_12_E的ADC引脚。电路图如下：</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/4.png" alt="4"></p>
+<p>来看一下实物图，</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/34.jpg" alt="34"></p>
+<p>哈哈哈，有没有很失望，本来打算使用亚克力封装一下，由于当时时间太紧了，参加完赛事，还有其他项目对接。反正终端这块最后就这样子。剩下主要是云平台后台的优化和测试，这方面工作我做的比较少，大部分师兄在完成。下面就简单介绍下</p>
+<h5 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h5><p>整个项目采用Java生态体系，使用EMQ作为消息中间件（MQ消息处理层），核心业务层使用SpringBoot开发，所以附带了与生俱来的分布式特点，同时数据库采用了MySQL，支持Redis缓存，减轻了服务器对资源的存储压力。业务逻辑层使用了Java WEB框架生态体系SpringFrameWork ，包含了：SpringBoot、SpringMVC、SpringSession和SpringSecurity。 MQ消息处理层主要处理终端传感器上报的MQTT协议消息，MQTT（Message Queuing Telemetry Transport 消息队列遥测传输协议）是一种基于发布/订阅模式的”轻量级”通讯协议，该协议构建于TCP/IP基础上，作为一种低开销、低带宽占用的即时通讯协议，使其在物联网、小型设备和移动应用等方面有较广泛的应用。</p>
+<p>在物联网平台中一个很重要的观念就是组织，所有的设备、用户、数据都是基于组织管理的[12]。用户是基于一个组织下的人员构成，每个组织下面都有管理员角色，管理员可以为其服务的组织添加不同的用户，并分配每个用户不同的权限。如设备的浏览权限可以控制不同用户是否能看到这个设备，设备数据浏览权限可以控制不同用户能否查看某一设备的运行数据：</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/5.png" alt="5"></p>
+<p>物联系统首页是设备概览、系统状态和服务器信息，方便管理员对整个系统进行概览；系统管理包含对平台权限的管理，针对平台的各项功能将权限按照ID、菜单码、菜单名称、权限码、权限名称进行设置，开放平台不同角色的部分或全部选取，达到划分高低权限角色的目的。</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/777.png" alt="777"></p>
+<p>告警管理页面是针对传感器信息管理功能和对应的温湿度、人体体温心率监测服务，并提供直观的数据可视化监测界面，同时按照温湿度标准，设定一套告警功能。</p>
+<p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/8.png" alt="8"></p>
+<p>系统部署在腾讯云上，具体服务器部署网上有很多教程，域名链接为：<a href="https://iot.thunk.cn" target="_blank" rel="noopener">https://iot.thunk.cn</a>，目前在公司实习，由于时间仓促，难免有错误和疏漏，欢迎网友批评指正！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">研电赛</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-RTT操作系统笔记___第三季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -461,13 +557,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">BLE低功耗蓝牙笔记</a>
+      <a class="article-title" href="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">BLE低功耗蓝牙笔记</a>
     </h1>
   
 
         
-        <a href="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2018-12-12T13:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+        <a href="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2019-05-22T13:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
 </a>
         
       </header>
@@ -477,15 +573,15 @@
         <p><strong>1.蓝牙协议栈分层</strong></p>
 <ul>
 <li><p>看到的是这样子 </p>
-<p><img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image.png" alt="Image"></p>
+<p><img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image.png" alt="Image"></p>
 </li>
 <li><p>或者这样子</p>
 </li>
 </ul>
-<p><img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image1.png" alt="Image1"><br>本文将按照如下层次分析<br>§PHY(物理层<br>§LL(链路控制层)<br>§HCI(主机和控制接口)<br>§L2CAP层(逻辑链路控制和适配层)<br>§GATT(通用属性规范)<br>§ATT(属性传输协议)<br>§SMP(安全管理)<br><strong>2.先说一下蓝牙广播</strong><br><strong>(1)配置过程</strong><br>在BLE程序编写中，必不可少的就是进行蓝牙的广播初始化和配置</p>
-<p><img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image2.png" alt="Image2"></p>
-<p>广播初始化函数advertising_init（）,定义结构体 advdata 参数如下：<br>advdata.name_type = BLE_ADVDATA_FULL_NAME;//广播时的名称显示 advdata.include_appearance  = true;<br>advdata.flags=BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;//蓝牙设备模式   //LE General Discoverable Mode, BR/EDR not supported.<br><strong>蓝牙BR/EDR（蓝牙基本速率/增强数据率），低功耗是Bluetooth Smart 的亮点之一，所以不支持 BR/EDR。所以注意nrf52832是无法传输音频的。</strong><br>这个里面关键的问题就是广播类型的选择，广播类型有几种，如下图所示（英文解<br>释具体查看官方SDK 说明）：<br> <img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image3.png" alt="Image3"><br>解释一下：<br>Direct 模式及直连模式，利用的就是ble 中的直连广播，该模式是为了快速重连上刚刚断开的设备，比如利用在快速重连上意外断开的设备，已达到无缝恢复的目的。定向广播。<br>Fast 模式：就是普通的广播，不过连接间隔我们可以设置的快一点。<br>Slow 模式：普通广播，连接间隔设置的慢一点<br>Idle 模式：停止广播。<br><strong>（2）广播包</strong><br>1)Public address.<br>蓝牙地址的种类。蓝牙协议规定，任何一个蓝牙设备必须拥有一个唯一的48bit 的地址，用以标识标识身份。而且，在广播的时候必须要把蓝牙地址广播出去。蓝牙地址有以下的四种: 1)Public address. Public address 是公司通过IEEE 申请获得的，称为OUI(Organizationally Unique Identifier)。这个地址是固定的地址，全球唯一的，不可以修改。<br>2)Random Static address<br>Random Static address 是设备在上电的时候随机生成或者是芯片厂家在生产芯片的时候随机烧录的不重复的48 bit 的蓝牙地址。nrf52832 的蓝牙地址属于后者。该地址存放在FICR 里面，用户不可以修改。<br>3）Private Non-Resolvable address 和Private Resolvable address 不常用，感兴趣可以翻下蓝牙核心规范<br><strong>3.GAP层的配置</strong><br><strong>（1）通用访问配置文件(Generic Access Profile, GAP)</strong>，该Profile 保证不同Bluetooth 产品可以互相发现对方并建立连接。<br>（GAP）定义了蓝牙设备如何发现和建立与其他设备的安全（或不安全）连接。它处理一些一般模式的业务（如询问、命名和搜索）和一些安全性问题（如担保），同时还处理一些有关连接的业务（如链路建立、信道和连接建立。<br>     在一个典型的蓝牙系统中，外围设备发送具体的广告数据让任何中央设备知道他是一个可连接的设备。广告内容包含设备地址，还可以包含一些额外的额数据，比如设备名称。<br>      中央设备接收到广告后发送一个搜索请求给外围设备，外围设备答复一个搜索答复。这就是设备发现的过程，这样中央设备就知道外围设备是一个可连接的设备。中央设备可以发送一个建立连接的请求给外围设备，一个连接情况包含一些连接参数。<br><strong>（2）蓝牙链接参数的更新</strong><br>下图为链路控制和适配协议链接参数更新请求和响应命令。在链接中，如果从设<br>备希望修改当前的链接参数则可以使用该命令<br>![Image4(BLE低功耗蓝牙笔记/Image4.png)<br>在链路层的连接配置过程完成后，链接参数connInterval，connSlaceLatency 和connTimeout 参数可以实现更新。主设备通过发CONN_PARAM_UPDATE_REQ 数据包去完成更新，而从设备则通过Host 层的处理去影响这些参数。本讲主要是探讨如何设置从机更新请求过程，因为整个更新必须从机发起申请，再由主机发起更新。<br>    从机设备可以在任何时候发送链接参数更新请求命令。收到该信息的主设备如果可以修改链接参数，则将返回链接参数更应答命令，其中的结果代码设置为接受。然后 主设备将会启动链路层链接参数更新控制规程对链接参数进行更新。<br>    <strong>UUID是什么？</strong><br>    UUID 含义是通用唯一识别码(Universally Unique Identifier)，这是一个软件建构的标准。UUID 是指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。所有的蓝牙技术联盟定义UUID 共用了一个基本的UUID：0x0000xxxx-0000-1000-8000-00805F9B34FB   ;;也有如下解释：<br><img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image5.png" alt="Image5"><br>如何配置UUID呢？</p>
-<p><img src="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image6.png" alt="Image6"></p>
+<p><img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image1.png" alt="Image1"><br>本文将按照如下层次分析<br>§PHY(物理层<br>§LL(链路控制层)<br>§HCI(主机和控制接口)<br>§L2CAP层(逻辑链路控制和适配层)<br>§GATT(通用属性规范)<br>§ATT(属性传输协议)<br>§SMP(安全管理)<br><strong>2.先说一下蓝牙广播</strong><br><strong>(1)配置过程</strong><br>在BLE程序编写中，必不可少的就是进行蓝牙的广播初始化和配置</p>
+<p><img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image2.png" alt="Image2"></p>
+<p>广播初始化函数advertising_init（）,定义结构体 advdata 参数如下：<br>advdata.name_type = BLE_ADVDATA_FULL_NAME;//广播时的名称显示 advdata.include_appearance  = true;<br>advdata.flags=BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;//蓝牙设备模式   //LE General Discoverable Mode, BR/EDR not supported.<br><strong>蓝牙BR/EDR（蓝牙基本速率/增强数据率），低功耗是Bluetooth Smart 的亮点之一，所以不支持 BR/EDR。所以注意nrf52832是无法传输音频的。</strong><br>这个里面关键的问题就是广播类型的选择，广播类型有几种，如下图所示（英文解<br>释具体查看官方SDK 说明）：<br> <img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image3.png" alt="Image3"><br>解释一下：<br>Direct 模式及直连模式，利用的就是ble 中的直连广播，该模式是为了快速重连上刚刚断开的设备，比如利用在快速重连上意外断开的设备，已达到无缝恢复的目的。定向广播。<br>Fast 模式：就是普通的广播，不过连接间隔我们可以设置的快一点。<br>Slow 模式：普通广播，连接间隔设置的慢一点<br>Idle 模式：停止广播。<br><strong>（2）广播包</strong><br>1)Public address.<br>蓝牙地址的种类。蓝牙协议规定，任何一个蓝牙设备必须拥有一个唯一的48bit 的地址，用以标识标识身份。而且，在广播的时候必须要把蓝牙地址广播出去。蓝牙地址有以下的四种: 1)Public address. Public address 是公司通过IEEE 申请获得的，称为OUI(Organizationally Unique Identifier)。这个地址是固定的地址，全球唯一的，不可以修改。<br>2)Random Static address<br>Random Static address 是设备在上电的时候随机生成或者是芯片厂家在生产芯片的时候随机烧录的不重复的48 bit 的蓝牙地址。nrf52832 的蓝牙地址属于后者。该地址存放在FICR 里面，用户不可以修改。<br>3）Private Non-Resolvable address 和Private Resolvable address 不常用，感兴趣可以翻下蓝牙核心规范<br><strong>3.GAP层的配置</strong><br><strong>（1）通用访问配置文件(Generic Access Profile, GAP)</strong>，该Profile 保证不同Bluetooth 产品可以互相发现对方并建立连接。<br>（GAP）定义了蓝牙设备如何发现和建立与其他设备的安全（或不安全）连接。它处理一些一般模式的业务（如询问、命名和搜索）和一些安全性问题（如担保），同时还处理一些有关连接的业务（如链路建立、信道和连接建立。<br>     在一个典型的蓝牙系统中，外围设备发送具体的广告数据让任何中央设备知道他是一个可连接的设备。广告内容包含设备地址，还可以包含一些额外的额数据，比如设备名称。<br>      中央设备接收到广告后发送一个搜索请求给外围设备，外围设备答复一个搜索答复。这就是设备发现的过程，这样中央设备就知道外围设备是一个可连接的设备。中央设备可以发送一个建立连接的请求给外围设备，一个连接情况包含一些连接参数。<br><strong>（2）蓝牙链接参数的更新</strong><br>下图为链路控制和适配协议链接参数更新请求和响应命令。在链接中，如果从设<br>备希望修改当前的链接参数则可以使用该命令<br>![Image4(BLE低功耗蓝牙笔记/Image4.png)<br>在链路层的连接配置过程完成后，链接参数connInterval，connSlaceLatency 和connTimeout 参数可以实现更新。主设备通过发CONN_PARAM_UPDATE_REQ 数据包去完成更新，而从设备则通过Host 层的处理去影响这些参数。本讲主要是探讨如何设置从机更新请求过程，因为整个更新必须从机发起申请，再由主机发起更新。<br>    从机设备可以在任何时候发送链接参数更新请求命令。收到该信息的主设备如果可以修改链接参数，则将返回链接参数更应答命令，其中的结果代码设置为接受。然后 主设备将会启动链路层链接参数更新控制规程对链接参数进行更新。<br>    <strong>UUID是什么？</strong><br>    UUID 含义是通用唯一识别码(Universally Unique Identifier)，这是一个软件建构的标准。UUID 是指在一台机器上生成的数字，它保证对在同一时空中的所有机器都是唯一的。所有的蓝牙技术联盟定义UUID 共用了一个基本的UUID：0x0000xxxx-0000-1000-8000-00805F9B34FB   ;;也有如下解释：<br><img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image5.png" alt="Image5"><br>如何配置UUID呢？</p>
+<p><img src="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/Image6.png" alt="Image6"></p>
 <p>SoftDevice 根据蓝牙技术联盟定义UUID 类似的方式定义UUID：先增加一个特定的基本UUID，再定义一个16 位的UUID（类似于一个别名），再加载在基本UUID之上。这种采用为所有的定制属性定义一个共用的基本UUID 的方式使得应用变为更加简单，至少在同一服务中更是如此。<br>       使用软件nRFgo Studio 非常容易产生一个新的基本UUID,生成过程如下：UUID 需要重新设置，因为本服务中将要使用一个定制（私有）的UUID，以代替蓝牙技术联盟所定义的UUID。首先，先定义一个基本UUID，一种方式是采用nRFgo Studio 来生成。下次我们再学习和分析…</p>
 
       
@@ -521,7 +617,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/12/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/05/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/">展开全文 >></a>
         </p>
       
 
@@ -648,6 +744,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">研电赛</a>
               </li>
             
             <div class="clearfix"></div>
