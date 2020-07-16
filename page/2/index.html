@@ -152,6 +152,181 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RTT操作系统笔记___信号量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/">RTT物联网操作系统笔记--信号量</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/" class="archive-article-date">
+  	<time datetime="2020-04-24T13:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>RTT中的信号量</p>
+<p>信号量（Semaphore）是一种实现线程间通信的机制，实现线程之间同步或临界资源的互斥访问，常用于协助一组相互竞争的线程来访问临界资源。在多线程系统中，各线程之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。</p>
+<p>信号量获取，从创建的信号量资源中获取一个信号量，获取成功返回正确。否则线程会等待其它线程释放该信号量，超时时间由用户设定。当线程获取信号量失败时，线程将进入阻塞态，系统将线程挂到该信号量的阻塞列表中。在二值信号量无效的时候，假如此时有线程获取该信号量的话，那么线程将进入阻塞状态，具体见图 </p>
+<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/1.png" alt="1"></p>
+        
+          <a class="article-more-a" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-RTT操作系统笔记___简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/">RTT物联网操作系统笔记--简介</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/" class="archive-article-date">
+  	<time datetime="2020-04-05T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-裸机系统与多线程系统："><a href="#1-裸机系统与多线程系统：" class="headerlink" title="1.裸机系统与多线程系统："></a>1.裸机系统与多线程系统：</h5><p>   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。<br>     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的处理是在线程中完成的。在多线程系统中，线程跟中断一样，也具有优先级，优先级高的线程会被优先执行。当一个紧急的事件在中断被标记之后，如果事件对应的线程的优先级足够高，就会立马得到响应。相比前后台系统，多线程系统的实时性又被提高了。<br>     调度器是操作系统的核心，其主要功能就是实现线程的切换，即从就绪列表里面找到优先级最高的线程，然后去执行该线程。从代码上来看，调度器无非也就是由几个全局变量和一些可以实现线程切换的函数组成，全部都在scheduler.c文件中实现。</p>
+        
+          <a class="article-more-a" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-BLE低功耗蓝牙笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

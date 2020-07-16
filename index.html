@@ -152,6 +152,179 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-RTT操作系统笔记___线程1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/">RTT物联网操作系统笔记--线程1</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/" class="archive-article-date">
+  	<time datetime="2020-07-04T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="RT-thread系统创建线程与启动流程"><a href="#RT-thread系统创建线程与启动流程" class="headerlink" title="RT-thread系统创建线程与启动流程"></a>RT-thread系统创建线程与启动流程</h5><p>上一季我们已经基于开发板创建好了RT-Thread 的工程模板，这章开始我们将真正进入如何使用RT-Thread 的征程，先从最简单的创建线程开始，点亮一个LED，以慰藉初学者的心灵，让我有点正反馈…。创建的线程需要用到开发板上的LED，所以先要将LED 相关的函数初始化好，具体是在board.c 的rt_hw_board_init()函数中初始化，具体见代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_board_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">11 </span>&#123;</span><br><span class="line"><span class="number">12</span> <span class="comment">/* 初始化SysTick */</span></span><br><span class="line"><span class="number">13</span> SysTick_Config( SystemCoreClock / RT_TICK_PER_SECOND );</span><br><span class="line"><span class="number">15</span> <span class="comment">/* 硬件BSP 初始化统统放在这里，比如LED，串口，LCD 等 */</span></span><br><span class="line"><span class="number">17</span> <span class="comment">/* 初始化开发板的LED */</span></span><br><span class="line"><span class="number">18</span> LED_GPIO_Config()</span><br><span class="line">   ｝</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+    <article id="post-RTT操作系统笔记___系统文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/">RTT物联网操作系统笔记--系统文件</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/" class="archive-article-date">
+  	<time datetime="2020-06-25T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="RT-thread系统文件说明和代码段解释"><a href="#RT-thread系统文件说明和代码段解释" class="headerlink" title="RT-thread系统文件说明和代码段解释"></a>RT-thread系统文件说明和代码段解释</h5><p>首先是在说开发的芯片上有一个裸机的模版，然后可以去RTthred官方下载Master或者Nano版本的系统代码，Nano 是Master 的精简版，去掉了一些组件和各种开发板的BSP，保留了OS 的核心功能，但足够我们使用。RT-Thread Master 的源码可从RT-Thread GitHub 仓库地址：<a href="https://github.com/RT-Thread/rt-thread" target="_blank" rel="noopener">https://github.com/RT-Thread/rt-thread</a> 下载到，Nano 就是从里面扣出来的，Nano在官网地址为 <a href="https://www.rt-thread.org/download/nano/rt-thread-3.1.3.zip" target="_blank" rel="noopener">https://www.rt-thread.org/download/nano/rt-thread-3.1.3.zip</a>  ，下面对比下两者的文件，分为为Nano和Master</p>
+        
+          <a class="article-more-a" href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
     <article id="post-云看护物联网系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -229,19 +402,19 @@
 
 
   
-    <article id="post-RTT操作系统笔记___第三季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-RTT操作系统笔记___内存管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/">RTT国产物联网操作系统笔记----第三季</a>
+      <a class="article-title" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">RTT物联网操作系统笔记--内存管理</a>
     </h1>
   
 
         
-        <a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/" class="archive-article-date">
+        <a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="archive-article-date">
   	<time datetime="2020-05-17T11:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
 </a>
         
@@ -249,13 +422,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="RTT操作系统笔记—-第三季"><a href="#RTT操作系统笔记—-第三季" class="headerlink" title="RTT操作系统笔记—-第三季"></a>RTT操作系统笔记—-第三季</h4><p>RTT中的内存管理</p>
+        <p>RTT中的内存管理</p>
 <p>在计算系统中，变量、中间数据一般存放在系统存储空间中，只有在实际使用时才将它们从存储空间调入到中央处理器内部进行运算。通常存储空间可以分为两种：内部存储空间和外部存储空间。内部存储空间访问速度比较快，能够按照变量地址随机地访问，也就是我们通常所说的RAM（随机存储器），或电脑的内存；而外部存储空间内所保存的内容相对来说比较固定，即使掉电后数据也不会丢失，可以把它理解为电脑的硬盘。在这一章中我们主要讨论内部存储空间（RAM）的管理——内存管理。</p>
 <p>​     动态分配内存与静态分配内存的区别：静态内存一旦创建就指定了内存块的大小，分配只能以内存块大小粒度进行分配；动态内存分配则根据运行时环境确定需要的内存块大小，按照需要分配内存。内核负责给内存池分配内存池对象控制块，它同时也接收用户线程的分配内存块申请，当获得申请信息后，内核就可以从内存池中为线程分配内存块。内存池一旦初始化完成，内部的内存块大小将不能再做调整，具体见下图：</p>
-<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/7.png" alt="7"></p>
-<p> 小内存管理算法是一个简单的内存分配算法。初始时，它是一块大的内存，其大小为（MEM_SIZE），当需要分配内存块时，将从这个大的内存块上分割出相匹配的内存块，然后把分割出来的空闲内存块还回给堆管理系统中。</p>
         
-          <a class="article-more-a" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/#more">more >></a>
+          <a class="article-more-a" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/#more">more >></a>
         
       
 
@@ -290,182 +461,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-RTT操作系统笔记___第二季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/">RTT国产物联网操作系统笔记----第二季</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/" class="archive-article-date">
-  	<time datetime="2020-04-24T13:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="RTT操作系统笔记—-第二季"><a href="#RTT操作系统笔记—-第二季" class="headerlink" title="RTT操作系统笔记—-第二季"></a>RTT操作系统笔记—-第二季</h4><p>RTT中的信号量</p>
-<p>信号量（Semaphore）是一种实现线程间通信的机制，实现线程之间同步或临界资源的互斥访问，常用于协助一组相互竞争的线程来访问临界资源。在多线程系统中，各线程之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。</p>
-<p>信号量获取，从创建的信号量资源中获取一个信号量，获取成功返回正确。否则线程会等待其它线程释放该信号量，超时时间由用户设定。当线程获取信号量失败时，线程将进入阻塞态，系统将线程挂到该信号量的阻塞列表中。在二值信号量无效的时候，假如此时有线程获取该信号量的话，那么线程将进入阻塞状态，具体见图 </p>
-<p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/1.png" alt="1"></p>
-        
-          <a class="article-more-a" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-    <article id="post-RTT操作系统笔记___第一季" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/">RTT国产物联网操作系统笔记----第一季</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/" class="archive-article-date">
-  	<time datetime="2020-04-05T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="RTT国产物联网操作系统笔记—-第一季"><a href="#RTT国产物联网操作系统笔记—-第一季" class="headerlink" title="RTT国产物联网操作系统笔记—-第一季"></a>RTT国产物联网操作系统笔记—-第一季</h4><h5 id="1-裸机系统与多线程系统："><a href="#1-裸机系统与多线程系统：" class="headerlink" title="1.裸机系统与多线程系统："></a>1.裸机系统与多线程系统：</h5><p>   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。<br>     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的处理是在线程中完成的。在多线程系统中，线程跟中断一样，也具有优先级，优先级高的线程会被优先执行。当一个紧急的事件在中断被标记之后，如果事件对应的线程的优先级足够高，就会立马得到响应。相比前后台系统，多线程系统的实时性又被提高了。<br>     调度器是操作系统的核心，其主要功能就是实现线程的切换，即从就绪列表里面找到优先级最高的线程，然后去执行该线程。从代码上来看，调度器无非也就是由几个全局变量和一些可以实现线程切换的函数组成，全部都在scheduler.c文件中实现。</p>
-        
-          <a class="article-more-a" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%80%E5%AD%A3/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">展开全文 >></a>
         </p>
       
 

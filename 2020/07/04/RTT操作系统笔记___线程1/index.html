@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | Coco的个人站</title>
+  <title>RTT物联网操作系统笔记--线程1 | Coco的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Coco的个人站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Coco的个人站">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="RT-thread系统创建线程与启动流程上一季我们已经基于开发板创建好了RT-Thread 的工程模板，这章开始我们将真正进入如何使用RT-Thread 的征程，先从最简单的创建线程开始，点亮一个LED，以慰藉初学者的心灵，让我有点正反馈…。创建的线程需要用到开发板上的LED，所以先要将LED 相关的函数初始化好，具体是在board.c 的rt_hw_board_init()函数中初始化，具体见代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTT物联网操作系统笔记--线程1">
+<meta property="og:url" content="http://yoursite.com/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/index.html">
 <meta property="og:site_name" content="Coco的个人站">
-<meta property="og:description" content="Coco的个人站">
+<meta property="og:description" content="RT-thread系统创建线程与启动流程上一季我们已经基于开发板创建好了RT-Thread 的工程模板，这章开始我们将真正进入如何使用RT-Thread 的征程，先从最简单的创建线程开始，点亮一个LED，以慰藉初学者的心灵，让我有点正反馈…。创建的线程需要用到开发板上的LED，所以先要将LED 相关的函数初始化好，具体是在board.c 的rt_hw_board_init()函数中初始化，具体见代">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-04T14:39:00.000Z">
+<meta property="article:modified_time" content="2020-07-16T15:19:15.498Z">
 <meta property="article:author" content="Coco的个人站">
+<meta property="article:tag" content="RT-Thread">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Coco的个人站" type="application/atom+xml">
@@ -150,36 +153,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-RTT操作系统笔记___线程1" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-05-17T11:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">RTT物联网操作系统笔记--内存管理</a>
+    <h1 class="article-title" itemprop="name">
+      RTT物联网操作系统笔记--线程1
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/" class="archive-article-date">
+  	<time datetime="2020-07-04T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="RT-thread系统创建线程与启动流程"><a href="#RT-thread系统创建线程与启动流程" class="headerlink" title="RT-thread系统创建线程与启动流程"></a>RT-thread系统创建线程与启动流程</h5><p>上一季我们已经基于开发板创建好了RT-Thread 的工程模板，这章开始我们将真正进入如何使用RT-Thread 的征程，先从最简单的创建线程开始，点亮一个LED，以慰藉初学者的心灵，让我有点正反馈…。创建的线程需要用到开发板上的LED，所以先要将LED 相关的函数初始化好，具体是在board.c 的rt_hw_board_init()函数中初始化，具体见代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_board_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function">11 </span>&#123;</span><br><span class="line"><span class="number">12</span> <span class="comment">/* 初始化SysTick */</span></span><br><span class="line"><span class="number">13</span> SysTick_Config( SystemCoreClock / RT_TICK_PER_SECOND );</span><br><span class="line"><span class="number">15</span> <span class="comment">/* 硬件BSP 初始化统统放在这里，比如LED，串口，LCD 等 */</span></span><br><span class="line"><span class="number">17</span> <span class="comment">/* 初始化开发板的LED */</span></span><br><span class="line"><span class="number">18</span> LED_GPIO_Config()</span><br><span class="line">   ｝</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a> 执行到rt_hw_board_init() 函数的时候， 操作系统完全都还没有涉及到， 即rt_hw_board_init()函数所做的工作跟我们以前编写的裸机工程里面的硬件初始化工作是一模一样的。运行完rt_hw_board_init()函数，接下来才慢慢启动操作系统，最后运行创建好的线程。有时候线程创建好，整个系统跑起来了，可想要的实验现象就是出不来，比如LED 不会亮，串口没有输出，LCD 没有显示等等。这里面有个小小的技巧，即在硬件初始化好之后，顺便测试下硬件，测试方法跟裸机编程一样，具体实现见代码：
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LED_GPIO_Config(); (<span class="number">1</span>)</span><br><span class="line"><span class="comment">/* 测试硬件是否正常工作 */</span></span><br><span class="line">LED1_ON;</span><br><span class="line"><span class="comment">/* 其它硬件初始化和测试 */</span> (<span class="number">2</span>)</span><br><span class="line"><span class="comment">/* 让程序停在这里，不再继续往下执行 */</span> (<span class="number">3</span>)</span><br><span class="line"> <span class="keyword">while</span> (<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>方便测试硬件好坏，让程序停在这里，不再继续往下执行，当测试完毕后，这个while(1);必须删除。</p>
+<p>下一步定义线程栈，每一个线程都是独立的，他们的运行环境都单独的保存在他们的栈空间当中。那么在定义好线程函数之后，我们还要为线程定义一个栈，目前我们使用的是静态内存，所以线程栈是一个独立的全局变量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 定义线程控栈时要求RT_ALIGN_SIZE 个字节对齐 */</span></span><br><span class="line"><span class="number">2</span> ALIGN(RT_ALIGN_SIZE)</span><br><span class="line"><span class="number">3</span> <span class="comment">/* 定义线程栈 */</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">static</span> <span class="keyword">rt_uint8_t</span> rt_led1_thread_stack[<span class="number">1024</span>];</span><br></pre></td></tr></table></figure>
+
+<p>定义好线程函数和线程栈之后，我们还需要为线程定义一个线程控制块，通常我们称这个线程控制块为线程的身份证。在C 代码上，线程控制块就是一个结构体，里面有非常多的成员，这些成员共同描述了线程的全部信息.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 定义线程控制块 */</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_thread</span> <span class="title">led1_thread</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>一个线程的三要素是线程主体函数，线程栈，线程控制块，那么怎么样把这三个要素联合在一起？RT-Thread 里面有一个叫线程初始化函数rt_thread_init()，它就是干这个活的。它将线程主体函数，线程栈（静态的）和线程控制块（静态的）这三者联系在一起，让线程可以随时被系统启动，具体见代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> rt_thread_init(&amp;led1_thread, <span class="comment">/* 线程控制块 */</span> </span><br><span class="line"><span class="number">2</span> <span class="string">"led1"</span>, <span class="comment">/* 线程名字 */</span> </span><br><span class="line"><span class="number">3</span> led1_thread_entry, <span class="comment">/* 线程入口函数 */</span> </span><br><span class="line"><span class="number">4</span> RT_NULL, <span class="comment">/* 线程入口函数参数 */</span> </span><br><span class="line"><span class="number">5</span> &amp;rt_led1_thread_stack[<span class="number">0</span>], <span class="comment">/* 线程栈起始地址 */</span> </span><br><span class="line"><span class="number">6</span> <span class="keyword">sizeof</span>(rt_led1_thread_stack), <span class="comment">/* 线程栈大小 */</span> </span><br><span class="line"><span class="number">7</span> <span class="number">3</span>, <span class="comment">/* 线程的优先级 */</span> </span><br><span class="line"><span class="number">8</span> <span class="number">20</span>); <span class="comment">/* 线程时间片 */</span></span><br></pre></td></tr></table></figure>
+
+<p>当线程初始化好后，是处于线程初始态（RT_THREAD_INIT），并不能够参与操作系统的调度，只有当线程进入就绪态（RT_THREAD_READY）之后才能参与操作系统的调度。线程由初始态进入就绪态可由函数rt_thread_startup()来实现,具体代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 启动线程，开启调度 */</span></span><br><span class="line"><span class="number">1</span> rt_thread_startup(&amp;led1_thread);</span><br></pre></td></tr></table></figure>
+
+<p>在当前这个例程，线程的栈，线程的控制块用的都是静态内存。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我喝可乐！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/2233.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/122.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,7 +244,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -204,18 +257,130 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RTT物联网操作系统笔记--系统文件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "denp9O6rWA8kko0CN5xbMsNy-gzGzoHsz",
+            app_key: "hY0QG6RVJJbm9hSdl47eKYMV",
+            placeholder: "Just go go",
+            avatar:"retro"
+        });
+    }
+</script>
+  </section>
+
+  
+  
   
 
-    
+  
 
+  
+
+  
 
           </div>
         </div>
@@ -237,8 +402,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

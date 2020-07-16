@@ -6,24 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>RTT国产物联网操作系统笔记----第三季 | Coco的个人站</title>
+  <title>RTT物联网操作系统笔记--系统文件 | Coco的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RTT操作系统笔记—-第三季RTT中的内存管理 在计算系统中，变量、中间数据一般存放在系统存储空间中，只有在实际使用时才将它们从存储空间调入到中央处理器内部进行运算。通常存储空间可以分为两种：内部存储空间和外部存储空间。内部存储空间访问速度比较快，能够按照变量地址随机地访问，也就是我们通常所说的RAM（随机存储器），或电脑的内存；而外部存储空间内所保存的内容相对来说比较固定，即使掉电后数据也不会丢">
+  <meta name="description" content="RT-thread系统文件说明和代码段解释首先是在说开发的芯片上有一个裸机的模版，然后可以去RTthred官方下载Master或者Nano版本的系统代码，Nano 是Master 的精简版，去掉了一些组件和各种开发板的BSP，保留了OS 的核心功能，但足够我们使用。RT-Thread Master 的源码可从RT-Thread GitHub 仓库地址：https:&#x2F;&#x2F;github.com&#x2F;RT-T">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RTT国产物联网操作系统笔记----第三季">
-<meta property="og:url" content="http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/index.html">
+<meta property="og:title" content="RTT物联网操作系统笔记--系统文件">
+<meta property="og:url" content="http://yoursite.com/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Coco的个人站">
-<meta property="og:description" content="RTT操作系统笔记—-第三季RTT中的内存管理 在计算系统中，变量、中间数据一般存放在系统存储空间中，只有在实际使用时才将它们从存储空间调入到中央处理器内部进行运算。通常存储空间可以分为两种：内部存储空间和外部存储空间。内部存储空间访问速度比较快，能够按照变量地址随机地访问，也就是我们通常所说的RAM（随机存储器），或电脑的内存；而外部存储空间内所保存的内容相对来说比较固定，即使掉电后数据也不会丢">
+<meta property="og:description" content="RT-thread系统文件说明和代码段解释首先是在说开发的芯片上有一个裸机的模版，然后可以去RTthred官方下载Master或者Nano版本的系统代码，Nano 是Master 的精简版，去掉了一些组件和各种开发板的BSP，保留了OS 的核心功能，但足够我们使用。RT-Thread Master 的源码可从RT-Thread GitHub 仓库地址：https:&#x2F;&#x2F;github.com&#x2F;RT-T">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/7.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/8.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/99.png">
-<meta property="article:published_time" content="2020-05-17T11:09:00.000Z">
-<meta property="article:modified_time" content="2020-07-12T09:17:00.768Z">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/6175721.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/180722.png">
+<meta property="article:published_time" content="2020-06-25T14:39:00.000Z">
+<meta property="article:modified_time" content="2020-07-16T15:20:10.758Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="RT-Thread">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/7.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/6175721.png">
   
     <link rel="alternative" href="/atom.xml" title="Coco的个人站" type="application/atom+xml">
   
@@ -157,37 +156,34 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-RTT操作系统笔记___第三季" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-RTT操作系统笔记___系统文件" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      RTT国产物联网操作系统笔记----第三季
+      RTT物联网操作系统笔记--系统文件
     </h1>
   
 
         
-        <a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/" class="archive-article-date">
-  	<time datetime="2020-05-17T11:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+        <a href="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/" class="archive-article-date">
+  	<time datetime="2020-06-25T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="RTT操作系统笔记—-第三季"><a href="#RTT操作系统笔记—-第三季" class="headerlink" title="RTT操作系统笔记—-第三季"></a>RTT操作系统笔记—-第三季</h4><p>RTT中的内存管理</p>
-<p>在计算系统中，变量、中间数据一般存放在系统存储空间中，只有在实际使用时才将它们从存储空间调入到中央处理器内部进行运算。通常存储空间可以分为两种：内部存储空间和外部存储空间。内部存储空间访问速度比较快，能够按照变量地址随机地访问，也就是我们通常所说的RAM（随机存储器），或电脑的内存；而外部存储空间内所保存的内容相对来说比较固定，即使掉电后数据也不会丢失，可以把它理解为电脑的硬盘。在这一章中我们主要讨论内部存储空间（RAM）的管理——内存管理。</p>
-<p>​     动态分配内存与静态分配内存的区别：静态内存一旦创建就指定了内存块的大小，分配只能以内存块大小粒度进行分配；动态内存分配则根据运行时环境确定需要的内存块大小，按照需要分配内存。内核负责给内存池分配内存池对象控制块，它同时也接收用户线程的分配内存块申请，当获得申请信息后，内核就可以从内存池中为线程分配内存块。内存池一旦初始化完成，内部的内存块大小将不能再做调整，具体见下图：</p>
-<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/7.png" alt="7"></p>
-<p> 小内存管理算法是一个简单的内存分配算法。初始时，它是一块大的内存，其大小为（MEM_SIZE），当需要分配内存块时，将从这个大的内存块上分割出相匹配的内存块，然后把分割出来的空闲内存块还回给堆管理系统中。<a id="more"></a>每个内存块都包含一个管理用的数据头，通过这个头把使用块与空闲块用双向链表的方式链接起来（内存块链表），具体见下图：</p>
-<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/8.png" alt="8"></p>
-<p><img src="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/99.png" alt="99"></p>
-<p>每个内存块（不管是已分配的内存块还是空闲的内存块）都包含一个数据头，其中包括：</p>
-<p><strong>magic – 变数（或称为幻数</strong>），它会被初始化成0x1ea0（即英文单词heap），用于标记这个内存块是一个内存管理用的内存数据块；</p>
-<p><strong>used -</strong> 指示出当前内存块是否已经分配。<br>magic变数不仅仅用于标识这个数据块是一个内存管理用的内存数据块，实质也是一个内存保护字：如果这个区域被改写，那么也就意味着这块内存块被非法改写（正常情况下只有内存管理器才会去碰这块内存）。</p>
-<p>   静态内存管理是当用户需要使用固定长度的内存时，可以使用静态内存分配的方式获取内存，一旦使用完毕，通过静态内存释放函数归还所占用内存，使之可以重复使用。<br>例如我们需要定义一个float型数组：float Arr[];  但是，在使用数组的时候，总有一个问题困扰着我们：数组应该有多大？在很多的情况下，你并不能确定要使用多大的数组，可能为了避免发生错误你就需要把数组定义得足够大。即使你知道想利用的空间大小，但是如果因为某种特殊原因空间利用的大小有增加或者减少，你又必须重新去修改程序，扩大数组的存储范围。这种分配固定大小的内存分配方法称之为静态内存分配。这种内存分配的方法存在比较严重的缺陷，在大多数情况下会浪费大量的内存空间，在少数情况下，当你定义的数组不够大时，可能引起下标越界错误，甚至导致严重后果。</p>
+        <h5 id="RT-thread系统文件说明和代码段解释"><a href="#RT-thread系统文件说明和代码段解释" class="headerlink" title="RT-thread系统文件说明和代码段解释"></a>RT-thread系统文件说明和代码段解释</h5><p>首先是在说开发的芯片上有一个裸机的模版，然后可以去RTthred官方下载Master或者Nano版本的系统代码，Nano 是Master 的精简版，去掉了一些组件和各种开发板的BSP，保留了OS 的核心功能，但足够我们使用。RT-Thread Master 的源码可从RT-Thread GitHub 仓库地址：<a href="https://github.com/RT-Thread/rt-thread" target="_blank" rel="noopener">https://github.com/RT-Thread/rt-thread</a> 下载到，Nano 就是从里面扣出来的，Nano在官网地址为 <a href="https://www.rt-thread.org/download/nano/rt-thread-3.1.3.zip" target="_blank" rel="noopener">https://www.rt-thread.org/download/nano/rt-thread-3.1.3.zip</a>  ，下面对比下两者的文件，分为为Nano和Master<a id="more"></a><img src="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/6175721.png" alt="6175721"></p>
+<p>图上RT-Thread 文件夹下就是RT-Thread Nano 的所有东西，该文件夹下的具体内容为：<br>bsp 板级支持包<br>components/finsh RT-Thread 组件<br>include 头文件<br>include/libc<br>libcpu/arm/cortex-m0 与处理器相关的接口文件<br>libcpu/arm/cortex-m3<br>libcpu/arm/cortex-m4<br>libcpu/arm/cortex-m7<br>src RT-Thread 内核源码</p>
+<p>bsp 文件夹里面存放的是板级支持包，即board support package 的英文缩写。RT-Thread为了推广自己，会给各种半导体厂商的评估板写好驱动程序，这些驱动程序就放在bsp 这个目录下，我们这里用的是nano 版本，只有几款开发板的驱动，如果是Master 版本，则存放了非常多的开发板的。如图下为RTthread为各家芯片厂提供的驱动程序：<img src="/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/180722.png" alt="180722"></p>
+<p>rtconfig.h 是RT-Thread 功能的配置头文件，里面定义了很多宏，通过这些宏定义，我们可以裁剪RT-Thread 的功能。用户在使用RT-Thread 的时候，用户只需要修改board.c 和rtconfig.h 这两个文件的内容即可，其它文件我们不需要改动。</p>
+<p>在RT-Thread 看来，除了内核，其它第三方加进来的软件都是组件，比如gui、fatfs、lwip 和finsh 等。那么这些组件就放在components 这个文件夹内，目前nano 版本只放了finsh，其它的都被删除了，master 版本则放了非常多的组件。board.c 是直接从RT-Thread/3.0.3/bsp 文件夹下面拷贝过来的，里面存放的是与硬件相关的初始化函数，rt_hw_board_init()函数，RT-Thread 启动的时候会调用一个名为rt_hw_board_init()的函数，从函数名称我们可以知道它是用来初始化开发板硬件的，比如时钟，比如串口等，具体初始化什么由用户选择。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rt_hw_board_init</span><span class="params">()</span> <span class="params">(<span class="number">4</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">/* 更新系统时钟 */</span></span><br><span class="line">SystemCoreClockUpdate(); (<span class="number">4</span>)<span class="number">-1</span></span><br><span class="line"><span class="comment">/* SysTick 初始化 */</span></span><br><span class="line">_SysTick_Config(SystemCoreClock / RT_TICK_PER_SECOND); (<span class="number">4</span>)<span class="number">-2</span></span><br><span class="line"> <span class="comment">/* 硬件BSP 初始化统统放在这里，比如LED，串口，LCD 等 */</span> (<span class="number">4</span>)<span class="number">-3</span></span><br><span class="line"> <span class="comment">/* 调用组件初始化函数 (use INIT_BOARD_EXPORT()) */</span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">ifdef</span> RT_USING_COMPONENTS_INIT</span></span><br><span class="line">rt_components_board_init(); (<span class="number">4</span>)<span class="number">-4</span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(RT_USING_CONSOLE) &amp;&amp; defined(RT_USING_DEVICE)</span></span><br><span class="line"> rt_console_set_device(RT_CONSOLE_DEVICE_NAME); (<span class="number">4</span>)<span class="number">-5</span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());(<span class="number">4</span>)<span class="number">-6</span></span><br><span class="line"> <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">84 * @brief SysTick 中断服务函数</span></span><br><span class="line"><span class="comment">89 * SysTick 中断服务函数在固件库文件stm32f10x_it.c 中也定义了，而现在</span></span><br><span class="line"><span class="comment">90 * 在board.c 中又定义一次，那么编译的时候会出现重复定义的错误，解决</span></span><br><span class="line"><span class="comment">91 * 方法是可以把stm32f10x_it.c 中的注释或者删除即可。</span></span><br><span class="line"><span class="comment">92 */</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">SysTick_Handler</span><span class="params">(<span class="keyword">void</span>)</span> <span class="params">(<span class="number">5</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">/* 进入中断 */</span></span><br><span class="line">rt_interrupt_enter();</span><br><span class="line"> <span class="comment">/* 更新时基 */</span></span><br><span class="line">     rt_tick_increase();</span><br><span class="line"><span class="comment">/* 离开中断 */</span></span><br><span class="line">rt_interrupt_leave();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码清单（4)：RT-Thread 启动的时候会调用一个名为rt_hw_board_init()的函数，从函数名称我们可以知道它是用来初始化开发板硬件的，比如时钟，比如串口等，具体初始化什么由用户选择。当这些硬件初始化好之后，RT-Thread 才继续往下启动。至RTThread是哪个文件里面的哪个函数会调用rt_hw_board_init()<br>代码清单 (4)-1：更新系统时钟，如果硬件已经能够跑起来都表示系统时钟是没有问题的，该函数一般由固件库提供。<br>代码清单 (4)-2：初始化系统定时器SysTick，SysTick 给操作系统提供时基，1个时基我们称之为一个tick，tick 是操作系统最小的时间单位。RT_TICK_PER_SECOND是一个在rtconfig.h 中定义的宏，用于配置SysTick 每秒中断多少次，这里配置为1000，即1 秒钟内SysTick 会中断1000 次，即中断周期为1ms。 这部分功能等下我们会用固件库函数SysTick_Config()来代替。<br>代码清单 (4)-3：硬件BSP 初始化统统放在这里，比如LED，串口，LCD 等。目前我们暂时没有初始化任何开发板的硬件。<br>代码清单 (4)-4：这部分是RT-Thread 为开发板组件提供的一个初始化函数，该函数在components.c 里面实现，由rtconfig.h 里面的宏RT_USING_COMPONENTS_INIT 决定是否调用，默认是开启。<br>代码清单 (4)-5：rt_console_set_device()是RT-Thread 提供的一个控制台设置函数，它将指定rt_kprintf()函数的输出内容具体从什么设备打印出来。该函数在kservice.c 里面实现，由rtconfig.h 里面的RT_USING_CONSOLE 和RT_USING_DEVICE 这两个宏决定是否调用，目前我们暂时不用。</p>
 
       
 
@@ -299,7 +295,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%B8%89%E5%AD%A3/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/06/25/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%B3%BB%E7%BB%9F%E6%96%87%E4%BB%B6/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -313,18 +309,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          研电赛总结
+          RTT物联网操作系统笔记--线程1
         
       </div>
     </a>
   
   
-    <a href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AC%AC%E4%BA%8C%E5%AD%A3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RTT国产物联网操作系统笔记----第二季</div>
+    <a href="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">研电赛总结</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -6,17 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | Coco的个人站</title>
+  <title>RTT物联网操作系统笔记--简介 | Coco的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Coco的个人站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Coco的个人站">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="1.裸机系统与多线程系统：   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTT物联网操作系统笔记--简介">
+<meta property="og:url" content="http://yoursite.com/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/index.html">
 <meta property="og:site_name" content="Coco的个人站">
-<meta property="og:description" content="Coco的个人站">
+<meta property="og:description" content="1.裸机系统与多线程系统：   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/TI20200709180954.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/T200709181334.png">
+<meta property="article:published_time" content="2020-04-05T14:39:00.000Z">
+<meta property="article:modified_time" content="2020-07-16T15:14:19.004Z">
 <meta property="article:author" content="Coco的个人站">
+<meta property="article:tag" content="RT-Thread">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/TI20200709180954.png">
   
     <link rel="alternative" href="/atom.xml" title="Coco的个人站" type="application/atom+xml">
   
@@ -150,36 +156,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-RTT操作系统笔记___简介" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-05-17T11:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/17/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">RTT物联网操作系统笔记--内存管理</a>
+    <h1 class="article-title" itemprop="name">
+      RTT物联网操作系统笔记--简介
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/" class="archive-article-date">
+  	<time datetime="2020-04-05T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-裸机系统与多线程系统："><a href="#1-裸机系统与多线程系统：" class="headerlink" title="1.裸机系统与多线程系统："></a>1.裸机系统与多线程系统：</h5><p>   轮询系统即是在裸机编程的时候，先初始化好相关的硬件，然后让主程序在一个死循环里面不断循环，顺序地做各种事情。相比轮询系统，前后台系统是在轮询系统的基础上加入了中断。外部事件的响应在中断里面完成，事件的处理还是回到轮询系统中完成，中断在这里我们称为前台，main函数里面的无限循环我们称为后台。<br>     相比前后台系统，多线程系统的事件响应也是在中断中完成的，但是事件的处理是在线程中完成的。在多线程系统中，线程跟中断一样，也具有优先级，优先级高的线程会被优先执行。当一个紧急的事件在中断被标记之后，如果事件对应的线程的优先级足够高，就会立马得到响应。相比前后台系统，多线程系统的实时性又被提高了。<br>     调度器是操作系统的核心，其主要功能就是实现线程的切换，即从就绪列表里面找到优先级最高的线程，然后去执行该线程。从代码上来看，调度器无非也就是由几个全局变量和一些可以实现线程切换的函数组成，全部都在scheduler.c文件中实现。<a id="more"></a></p>
+<h5 id="2-线程栈初始化："><a href="#2-线程栈初始化：" class="headerlink" title="2.线程栈初始化："></a>2.线程栈初始化：</h5><p>。如果只是单纯的裸机编程，它们放哪里我们不用管，但是如果要写一个RTOS，这些种种环境参数，我们必须弄清楚他们是如何存储的。在裸机系统中，他们统统放在一个叫栈的地方，栈是单片机RAM里面一段连续的内存空间，栈的大小一般在启动文件或者链接脚本里面指定，最后由C库函数_main进行初始化</p>
+<h5 id="main启动过程"><a href="#main启动过程" class="headerlink" title="main启动过程"></a>main启动过程</h5><p>​       一个工程如果没有main函数是编译不成功的，会出错。因为系统在开始执行的时候先执行启动文件里面的复位程序，复位程序里面会调用C库函数<strong>main，</strong>main的作用是初始化好系统变量，如全局变量，只读的，可读可写的等等。<strong>main最后会调用</strong>rtentry，再由__rtentry调用main函数，从而由汇编跳入到C的世界，这里面的main函数就需要我们手动编写，如果没有编写main函数，就会出现main函数没有定义的错误。</p>
+<p>  正如我们所说的那样，线程是一个独立的、无限循环且不能返回的函数。 线程的栈，线程的函数实体，线程的控制块最终需要联系起来才能由系统进行统一调度。</p>
+<p>  以小写的rt开头，表示这是一个外部函数，可以由用户调用，以_rt开头的函数表示内部函数，只能由RT-Thread内部使用RT-thread的五种状态，RT-Thread 系统中的每一个线程都有多种运行状态，他们之间的转换关系是怎么样的呢？从运行态线程变成阻塞态，或者从阻塞态变成就绪态，这些线程状态是怎么迁移的呢。</p>
+<p><img src="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/TI20200709180954.png" alt="TI20200709180954"></p>
+<h5 id="3-消息队列："><a href="#3-消息队列：" class="headerlink" title="3.消息队列："></a>3.消息队列：</h5><p>创建消息队列时先创建一个消息队列对象控制块，然后给消息队列分配一块内存空间，组织成空闲消息链表，这块内存的大小等于[消息大小+消息头（用于链表连接）]与消息队列容量的乘积，接着再初始化消息队列，此时消息队列为空。RT-Thread 操作系统的消息队列对象由多个元素组成，当消息队列被创建时，它就被分配了消息队列控制块：消息队列名称、内存缓冲区、消息大小以及队列长度等。同时每个消息队列对象中包含着多个消息框，每个消息框可以存放一条消息。</p>
+<p>发送紧急消息的过程与发送消息几乎一样，唯一的不同是，当发送紧急消息时，从空闲消息链表上取下来的消息块不是挂到消息队列的队尾，而是挂到队首，这样，接收者就能够优先接收到紧急消息，从而及时进行消息处理。<br>      读取消息时，根据msg_queue_head 找到最先入队列中的消息节点进行读取。根据消息队列控制块中的entry 判断队列是否有消息读取，对全部空闲（entry 为0）队列进行读消息操作会引起线程挂起。当消息队列不再被使用时，应该删除它以释放系统资源，一旦操作完成，消息队列将被永久性的删除。</p>
+<p><img src="/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/T200709181334.png" alt="T200709181334"></p>
+<p>我们使用的消息队列一般不是属于某个线程的队列，在很多时候，我们创建的队列，是每个线程都可以去对他进行读写操作的，但是为了保护每个线程对它进行读写操作的过程，我们必须要有阻塞机制，在某个线程对它读写操作的时候，必须保证该线程能正常完成读写操作，而不受后来的线程干扰，凡事都有先来后到嘛！</p>
+<p>而在发送消息操作的时候，为了保护数据，当且仅当空闲消息链表上有可用的空闲消息块时，发送者才能成功发送消息；当空闲消息链表上无可用消息块，说明消息队列已满，此时，发送消息的的线程或者中断程序会收到一个错误码（-RT_EFULL），发送消息并不带有阻塞机制的，因为发送消息的环境可能是在中断中，不允许有阻塞的情况。消息队列可以应用于发送不定长消息的场合，包括线程与线程间的消息交换，以及在中断服务函数中给线程发送消息（中断服务例程不可能接收消息）。</p>
+<p>消息队列控制块包含了每个消息队列的信息，如消息队列名称、内存缓冲区、消息大<br>小以及队列长度等，是很重要的一个内核对象控制块，具体见代码清单 18-1。</p>
+<p>代码清单 18-1 消息队列控制块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">rt_messagequeue</span> &#123;</span></span><br><span class="line"><span class="number">2</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_ipc_object</span> <span class="title">parent</span>;</span> (<span class="number">1</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">void</span> *msg_pool; (<span class="number">2</span>)</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span> <span class="keyword">rt_uint16_t</span> msg_size; (<span class="number">3</span>)</span><br><span class="line"><span class="number">7</span> <span class="keyword">rt_uint16_t</span> max_msgs; (<span class="number">4</span>)</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span> <span class="keyword">rt_uint16_t</span> entry; (<span class="number">5</span>)</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">11</span> <span class="keyword">void</span> *msg_queue_head; (<span class="number">6</span>)</span><br><span class="line"><span class="number">12</span> <span class="keyword">void</span> *msg_queue_tail; (<span class="number">7</span>)</span><br><span class="line"><span class="number">13</span> <span class="keyword">void</span> *msg_queue_free; (<span class="number">8</span>)</span><br><span class="line"><span class="number">14</span> &#125;;</span><br><span class="line"><span class="number">15</span> <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">rt_messagequeue</span> *<span class="title">rt_mq_t</span>;</span></span><br></pre></td></tr></table></figure>
+
+<p>代码清单 18-1(1)：消息队列属于内核对象，会在自身结构体里面包含一个内核对象类型<br>的成员，通过这个成员可以将消息队列挂到系统对象容器里面。<br>代码清单 18-1(2)：存放消息的消息池开始地址。<br>代码清单 18-1(3)：每条消息大小，消息队列中也就是节点的大小，单位为字节。<br>代码清单 18-1(4)：能够容纳的最大消息数量。<br>代码清单 18-1(5)：队列中的消息索引，记录消息队列的消息个数。<br>代码清单 18-1(6)：链表头指针，指向即将读取数据的节点。</p>
+<p>代码清单 18-1(7)：链表尾指针，指向允许写入数据的节点<br>代码清单 18-1(8)：指向队列的空闲节点的指针。</p>
+<p>​                                                                        <strong><em>以上代码来自野火的RT-Thread教程，使用请注明出处。</em></strong></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我喝可乐！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/2233.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/122.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,7 +244,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -204,18 +257,139 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/05/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%AE%80%E4%BB%8B/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          RTT物联网操作系统笔记--信号量
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/02/22/BLE%E4%BD%8E%E5%8A%9F%E8%80%97%E8%93%9D%E7%89%99%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">BLE低功耗蓝牙笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "denp9O6rWA8kko0CN5xbMsNy-gzGzoHsz",
+            app_key: "hY0QG6RVJJbm9hSdl47eKYMV",
+            placeholder: "Just go go",
+            avatar:"retro"
+        });
+    }
+</script>
+  </section>
+
+  
+  
   
 
-    
+  
 
+  
+
+  
 
           </div>
         </div>
@@ -237,8 +411,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
