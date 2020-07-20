@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>BLE协议栈--框架 | Coco的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块，但是只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？ 一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和掌握">
+  <meta name="description" content="最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块做开发，但只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？ 一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BLE协议栈--框架">
 <meta property="og:url" content="http://yoursite.com/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/index.html">
 <meta property="og:site_name" content="Coco的个人站">
-<meta property="og:description" content="最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块，但是只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？ 一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和掌握">
+<meta property="og:description" content="最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块做开发，但只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？ 一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/616.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/2.png">
@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/5.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/6.png">
 <meta property="article:published_time" content="2020-07-11T04:39:00.000Z">
-<meta property="article:modified_time" content="2020-07-19T04:20:39.090Z">
+<meta property="article:modified_time" content="2020-07-20T10:31:35.355Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="BLE协议栈">
 <meta name="twitter:card" content="summary">
@@ -186,7 +186,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块，但是只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。<br>Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？</p>
+        <p>最近研究了下BLE底层相关的协议栈，之前虽然用过蓝牙模块做开发，但只是停留在application应用层面之上，对协议栈只是模糊的了解，下面是一些BLE协议栈的总结。<br>Q：BLE协议栈为什么要分层？怎么理解BLE“连接”？如果BLE协议只有ATT层没有GATT层会发生什么？</p>
 <p>一般而言，我们把某个协议的实现代码称为协议栈（protocol stack），BLE协议栈就是实现低功耗蓝牙协议的代码，理解和掌握BLE协议是实现BLE协议栈的前提。在深入BLE协议栈各个组成部分之前，我们先看一下BLE协议栈整体架构。<a id="more"></a><img src="/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/616.png" alt="616"></p>
 <p>如上图所述，要实现一个BLE应用，首先需要一个支持BLE射频的芯片，然后还需要提供一个与此芯片配套的BLE协议栈，最后在协议栈上开发自己的应用。可以看出BLE协议栈是连接芯片和应用的桥梁，是实现整个BLE应用的关键。那BLE协议栈具体包含哪些功能呢？简单来说，BLE协议栈主要用来对你的应用数据进行<strong>层层封包</strong>，以生成一个满足BLE协议的空中数据包，也就是说，把应用数据包裹在一系列的帧（header）和帧尾（tail）中。具体来说，BLE协议栈主要由如下几部分组成：</p>
 <ul>
