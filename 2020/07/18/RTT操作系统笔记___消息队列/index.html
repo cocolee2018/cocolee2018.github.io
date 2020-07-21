@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/7 | Coco的个人站</title>
+  <title>RTT物联网操作系统--消息队列 | Coco的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Coco的个人站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Coco的个人站">
-<meta property="og:url" content="http://yoursite.com/archives/2020/07/index.html">
+  <meta name="description" content="队列又称消息队列（message queue），是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：  消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。 队列支持超时机制。 支持发送紧急消息，这里的紧急消息是往队列头发送消息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTT物联网操作系统--消息队列">
+<meta property="og:url" content="http://yoursite.com/2020/07/18/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.html">
 <meta property="og:site_name" content="Coco的个人站">
-<meta property="og:description" content="Coco的个人站">
+<meta property="og:description" content="队列又称消息队列（message queue），是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：  消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。 队列支持超时机制。 支持发送紧急消息，这里的紧急消息是往队列头发送消息。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-18T04:39:00.000Z">
+<meta property="article:modified_time" content="2020-07-21T03:56:01.030Z">
 <meta property="article:author" content="Coco的个人站">
+<meta property="article:tag" content="消息队列">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Coco的个人站" type="application/atom+xml">
@@ -156,36 +159,91 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-RTT操作系统笔记___消息队列" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/18/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="archive-article-date">
-  	<time datetime="2020-07-18T04:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/18/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">RTT物联网操作系统--消息队列</a>
+    <h1 class="article-title" itemprop="name">
+      RTT物联网操作系统--消息队列
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/07/18/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="archive-article-date">
+  	<time datetime="2020-07-18T04:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>队列又称消息队列（message queue），是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：</p>
+<ul>
+<li>消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。</li>
+<li>队列支持超时机制。</li>
+<li>支持发送紧急消息，这里的紧急消息是往队列头发送消息。<a id="more"></a> </li>
+</ul>
+<p><strong>创建消息队列</strong>时先创建一个消息队列对象控制块，然后给消息队列分配一块内存空间，组织成空闲消息链表。消息队列创建函数rt_mq_create()；消息队列创建函数rt_mq_create()实例；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">rt_mq_t</span> <span class="title">rt_mq_create</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">2</span> <span class="keyword">rt_size_t</span> msg_size,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">3</span> <span class="keyword">rt_size_t</span> max_msgs,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">4</span> <span class="keyword">rt_uint8_t</span> flag)</span>    <span class="comment">//函数源码</span></span></span><br><span class="line"><span class="function">5 <span class="comment">/* 创建一个消息队列 */</span></span></span><br><span class="line"><span class="function">6 test_mq </span>= rt_mq_create(<span class="string">"test_mq"</span>, <span class="comment">/* 消息队列名字 */</span></span><br><span class="line"><span class="number">7</span>	 <span class="number">40</span>, <span class="comment">/* 消息的最大长度 */</span></span><br><span class="line"><span class="number">8</span> 	<span class="number">20</span>, <span class="comment">/* 消息队列的最大容量 */</span></span><br><span class="line"><span class="number">9</span> 	RT_IPC_FLAG_FIFO);<span class="comment">/* 队列模式 FIFO(0x00)*/</span></span><br><span class="line"><span class="number">10</span> 	<span class="keyword">if</span> (test_mq != RT_NULL)</span><br><span class="line"><span class="number">11</span> rt_kprintf(<span class="string">"消息队列创建成功！\n\n"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>应用场景：消息队列可以应用于发送不定长消息的场合，包括线程与线程间的消息交换，以及在中断服务函数中给线程发送消息。</p>
+<p><strong>消息队列删除函数</strong>rt_mq_delete()；队列删除函数是根据消息队列句柄直接删除的，删除之后这个消息队列的所有信息都<br>会被系统回收清空。消息队列删除函数rt_mq_delete()的使用也是很简单的，只需传入要删除的消息队列的句柄即可，调用这个函数时，系统将删除这个消息队列。如果删除该消息队列时，有线程正在等待消息，那么删除操作会先唤醒等待在消息队列量上的线程。消息队列删除函数rt_mq_delete()实例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 定义消息队列控制块 */</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">static</span> <span class="keyword">rt_mq_t</span> test_mq = RT_NULL;</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rt_err_t</span> uwRet = RT_EOK;</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span> uwRet = rt_mq_delete(test_mq);</span><br><span class="line"><span class="number">7</span> <span class="keyword">if</span> (RT_EOK == uwRet)</span><br><span class="line"><span class="number">8</span> rt_kprintf(<span class="string">"消息队列删除成功！\n\n"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>消息队列发送消息函数rt_mq_send();消息队列对象先从空闲消息链表上取下一个空闲消息块，把线程或者中断服务程序发送的消息内容复制到消息块上，然后把该消息块挂到消息队列的尾部。消息队列发送消息函数rt_mq_send()实例:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">send_thread_entry</span><span class="params">(<span class="keyword">void</span>* parameter)</span></span></span><br><span class="line"><span class="function">2 </span>&#123;</span><br><span class="line"><span class="number">3</span> <span class="keyword">rt_err_t</span> uwRet = RT_EOK;</span><br><span class="line"><span class="number">4</span> <span class="keyword">uint32_t</span> send_data1 = <span class="number">1</span>;</span><br><span class="line"><span class="number">5</span> <span class="keyword">uint32_t</span> send_data2 = <span class="number">2</span>;</span><br><span class="line"><span class="number">6</span> <span class="keyword">while</span> (<span class="number">1</span>) &#123;<span class="comment">/* K1 被按下 */</span></span><br><span class="line"><span class="number">7</span> <span class="keyword">if</span> ( Key_Scan(KEY1_GPIO_PORT,KEY1_GPIO_PIN) == KEY_ON ) &#123;</span><br><span class="line"><span class="number">8</span> <span class="comment">/* 将数据写入（发送）到队列中，等待时间为 0 */</span></span><br><span class="line"><span class="number">9</span> uwRet = rt_mq_send(test_mq, <span class="comment">/* 写入（发送）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">10</span> &amp;send_data1, <span class="comment">/* 写入（发送）的数据 */</span></span><br><span class="line"><span class="number">11</span> <span class="keyword">sizeof</span>(send_data1)); <span class="comment">/* 数据的长度 */</span></span><br><span class="line"><span class="number">12</span> <span class="keyword">if</span> (RT_EOK != uwRet) &#123;</span><br><span class="line"><span class="number">13</span> 						rt_kprintf(<span class="string">"数据不能发送到消息队列！错误代码: %lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">14</span> 					  &#125;</span><br><span class="line"><span class="number">15</span> 													&#125;<span class="comment">/* K1 被按下 */</span></span><br><span class="line"><span class="number">16</span> <span class="keyword">if</span> ( Key_Scan(KEY2_GPIO_PORT,KEY2_GPIO_PIN) == KEY_ON ) &#123;</span><br><span class="line"><span class="number">17</span> <span class="comment">/* 将数据写入（发送）到队列中，等待时间为 0 */</span></span><br><span class="line"><span class="number">18</span> uwRet = rt_mq_send(test_mq, <span class="comment">/* 写入（发送）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">19</span> &amp;send_data2, <span class="comment">/* 写入（发送）的数据 */</span></span><br><span class="line"><span class="number">20</span> <span class="keyword">sizeof</span>(send_data2)); <span class="comment">/* 数据的长度 */</span></span><br><span class="line"><span class="number">21</span> <span class="keyword">if</span> (RT_EOK != uwRet) &#123;</span><br><span class="line"><span class="number">22</span> rt_kprintf(<span class="string">"数据不能发送到消息队列！错误代码: %lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">23</span> 						&#125;</span><br><span class="line"><span class="number">24</span>													 &#125;</span><br><span class="line"><span class="number">25</span> rt_thread_delay(<span class="number">20</span>);</span><br><span class="line"><span class="number">26</span> 			&#125;</span><br><span class="line"><span class="number">27</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>当消息队列中有消息时，接收线程才能接收到消息，接收消息是有阻塞机制的，用户可以自定义等待时间，RT-Thread 的接收消息过程是：接收一个消息后消息队列的头链表消息被转移到了空闲消息链表中，其源码实现具体见代码清单：这个rt_mq_recv()函数用于读取指定队列中的数据，并将获取的数据存储到buffer 指定的地址。要读取的数据的地址和大小为size，由用户定义，具体使用实例见代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 队列读取（接收），等待时间为一直等待 */</span></span><br><span class="line"><span class="number">2</span> uwRet = rt_mq_recv(test_mq, <span class="comment">/* 读取（接收）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">3</span> &amp;r_queue, <span class="comment">/* 读取（接收）的数据保存位置 */</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">sizeof</span>(r_queue), <span class="comment">/* 读取（接收）的数据的长度 */</span></span><br><span class="line"><span class="number">5</span> RT_WAITING_FOREVER); <span class="comment">/* 等待时间：一直等 */</span></span><br><span class="line"><span class="number">6</span> <span class="keyword">if</span> (RT_EOK == uwRet)</span><br><span class="line"><span class="number">7</span> &#123;</span><br><span class="line"><span class="number">8</span> rt_kprintf(<span class="string">"本次接收到的数据是：%d\n"</span>,r_queue);</span><br><span class="line"><span class="number">9</span> &#125; <span class="keyword">else</span></span><br><span class="line"><span class="number">10</span> &#123;</span><br><span class="line"><span class="number">11</span> rt_kprintf(<span class="string">"数据接收出错,错误代码: 0x%lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">12</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在使用RT-Thread 提供的消息队列函数的时候，需要了解以下几点：</p>
+<ol>
+<li>使用rt_mq_recv()、rt_mq_send()、rt_mq_delete()等这些函数之前应先创建需消息队列，并根据队列句柄进行操作。</li>
+<li>队列读取采用的是先进先出（FIFO）模式，会首先读取出首先存储在队列中的数据。当然也有例外，RT-Thread 给我们提供了另一个函数，可以发送紧急消息的，那么读取的时候就会读取到紧急消息的数据。</li>
+<li>必须要我们定义一个<strong>存储读取出来</strong>的数据的地方，并且把存储数据的起始地址传递给 rt_mq_recv()函数，否则，将发生地址非法的错误。</li>
+<li>接收消息队列中的消息是拷贝的方式，读取消息时候定义的地址必须保证能存放下即将读取消息的大小。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我喝可乐！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/2233.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/asset/122.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,107 +255,132 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/18/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/" class="archive-article-date">
-  	<time datetime="2020-07-11T04:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-11</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">BLE协议栈--框架</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/11/BLE%E5%8D%8F%E8%AE%AE%E6%A0%88__%E6%A1%86%E6%9E%B6/">BLE协议栈--框架</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">BLE协议栈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/" class="archive-article-date">
-  	<time datetime="2020-07-04T14:39:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/04/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E7%BA%BF%E7%A8%8B1/">RTT物联网操作系统笔记--线程1</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">RT-Thread</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/RTT//" class="article-tag-list-link color4">RTT</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
+
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "denp9O6rWA8kko0CN5xbMsNy-gzGzoHsz",
+            app_key: "hY0QG6RVJJbm9hSdl47eKYMV",
+            placeholder: "Just go go",
+            avatar:"retro"
+        });
+    }
+</script>
+  </section>
+
   
   
-    </div></section>
   
 
-    
+  
 
+  
+
+  
 
           </div>
         </div>
@@ -319,8 +402,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
