@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/4.png">
 <meta property="article:published_time" content="2020-04-24T13:09:00.000Z">
-<meta property="article:modified_time" content="2020-07-16T15:13:24.284Z">
+<meta property="article:modified_time" content="2020-07-21T03:13:45.138Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="RT-Thread">
 <meta name="twitter:card" content="summary">
@@ -185,7 +185,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>RTT中的信号量</p>
-<p>信号量（Semaphore）是一种实现线程间通信的机制，实现线程之间同步或临界资源的互斥访问，常用于协助一组相互竞争的线程来访问临界资源。在多线程系统中，各线程之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。</p>
+<p>信号量（Semaphore）是一种实现线程间通信的机制，实现线程之间<strong>同步或临界资源的互斥访问</strong>，常用于协助一组相互竞争的线程来访问临界资源。在多线程系统中，各线程之间需要同步或互斥实现临界资源的保护，信号量功能可以为用户提供这方面的支持。</p>
 <p>信号量获取，从创建的信号量资源中获取一个信号量，获取成功返回正确。否则线程会等待其它线程释放该信号量，超时时间由用户设定。当线程获取信号量失败时，线程将进入阻塞态，系统将线程挂到该信号量的阻塞列表中。在二值信号量无效的时候，假如此时有线程获取该信号量的话，那么线程将进入阻塞状态，具体见图 </p>
 <p><img src="/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/1.png" alt="1"></p>
 <a id="more"></a> 假如某个时间中断/线程释放了信号量，其过程具体见下图，那么，由于获取无效信号量而进入阻塞态的线程将获得信号量并且恢复为就绪态，其过程具体见下图：
