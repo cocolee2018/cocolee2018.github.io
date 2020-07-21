@@ -16,7 +16,7 @@
 <meta property="og:description" content="消息队列（message queue）是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：  消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。 队列支持超时机制。 支持发送紧急消息，这里的紧急消息是往队列头发送消息。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T04:39:00.000Z">
-<meta property="article:modified_time" content="2020-07-21T04:39:08.555Z">
+<meta property="article:modified_time" content="2020-07-21T04:44:10.429Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="消息队列">
 <meta name="twitter:card" content="summary">
@@ -192,16 +192,16 @@
 <p><strong>消息队列删除函数</strong>rt_mq_delete()；队列删除函数是根据消息队列句柄直接删除的，删除之后这个消息队列的所有信息都<br>会被系统回收清空。消息队列删除函数rt_mq_delete()的使用也是很简单的，只需传入要删除的消息队列的句柄即可，调用这个函数时，系统将删除这个消息队列。如果删除该消息队列时，有线程正在等待消息，那么删除操作会先唤醒等待在消息队列量上的线程。消息队列删除函数rt_mq_delete()实例：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 定义消息队列控制块 */</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">static</span> <span class="keyword">rt_mq_t</span> test_mq = RT_NULL;</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rt_err_t</span> uwRet = RT_EOK;</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span> uwRet = rt_mq_delete(test_mq);</span><br><span class="line"><span class="number">7</span> <span class="keyword">if</span> (RT_EOK == uwRet)</span><br><span class="line"><span class="number">8</span> rt_kprintf(<span class="string">"消息队列删除成功！\n\n"</span>);</span><br></pre></td></tr></table></figure>
 
-<p>消息队列发送消息函数rt_mq_send();消息队列对象先从空闲消息链表上取下一个空闲消息块，把线程或者中断服务程序发送的消息内容复制到消息块上，然后把该消息块挂到消息队列的尾部。消息队列发送消息函数rt_mq_send()实例:</p>
+<p>消息队列<strong>发送消息函数rt_mq_send</strong>();消息队列对象先从空闲消息链表上取下一个空闲消息块，把线程或者中断服务程序发送的消息内容复制到消息块上，然后把该消息块挂到消息队列的尾部。消息队列发送消息函数rt_mq_send()实例:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">send_thread_entry</span><span class="params">(<span class="keyword">void</span>* parameter)</span></span></span><br><span class="line"><span class="function">2 </span>&#123;</span><br><span class="line"><span class="number">3</span> <span class="keyword">rt_err_t</span> uwRet = RT_EOK;</span><br><span class="line"><span class="number">4</span> <span class="keyword">uint32_t</span> send_data1 = <span class="number">1</span>;</span><br><span class="line"><span class="number">5</span> <span class="keyword">uint32_t</span> send_data2 = <span class="number">2</span>;</span><br><span class="line"><span class="number">6</span> <span class="keyword">while</span> (<span class="number">1</span>) &#123;<span class="comment">/* K1 被按下 */</span></span><br><span class="line"><span class="number">7</span> <span class="keyword">if</span> ( Key_Scan(KEY1_GPIO_PORT,KEY1_GPIO_PIN) == KEY_ON ) &#123;</span><br><span class="line"><span class="number">8</span> <span class="comment">/* 将数据写入（发送）到队列中，等待时间为 0 */</span></span><br><span class="line"><span class="number">9</span> uwRet = rt_mq_send(test_mq, <span class="comment">/* 写入（发送）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">10</span> &amp;send_data1, <span class="comment">/* 写入（发送）的数据 */</span></span><br><span class="line"><span class="number">11</span> <span class="keyword">sizeof</span>(send_data1)); <span class="comment">/* 数据的长度 */</span></span><br><span class="line"><span class="number">12</span> <span class="keyword">if</span> (RT_EOK != uwRet) &#123;</span><br><span class="line"><span class="number">13</span> 						rt_kprintf(<span class="string">"数据不能发送到消息队列！错误代码: %lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">14</span> 					  &#125;</span><br><span class="line"><span class="number">15</span> 													&#125;<span class="comment">/* K1 被按下 */</span></span><br><span class="line"><span class="number">16</span> <span class="keyword">if</span> ( Key_Scan(KEY2_GPIO_PORT,KEY2_GPIO_PIN) == KEY_ON ) &#123;</span><br><span class="line"><span class="number">17</span> <span class="comment">/* 将数据写入（发送）到队列中，等待时间为 0 */</span></span><br><span class="line"><span class="number">18</span> uwRet = rt_mq_send(test_mq, <span class="comment">/* 写入（发送）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">19</span> &amp;send_data2, <span class="comment">/* 写入（发送）的数据 */</span></span><br><span class="line"><span class="number">20</span> <span class="keyword">sizeof</span>(send_data2)); <span class="comment">/* 数据的长度 */</span></span><br><span class="line"><span class="number">21</span> <span class="keyword">if</span> (RT_EOK != uwRet) &#123;</span><br><span class="line"><span class="number">22</span> rt_kprintf(<span class="string">"数据不能发送到消息队列！错误代码: %lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">23</span> 						&#125;</span><br><span class="line"><span class="number">24</span>													 &#125;</span><br><span class="line"><span class="number">25</span> rt_thread_delay(<span class="number">20</span>);</span><br><span class="line"><span class="number">26</span> 			&#125;</span><br><span class="line"><span class="number">27</span> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>当消息队列中有消息时，接收线程才能接收到消息，接收消息是有阻塞机制的，用户可以自定义等待时间，RT-Thread 的接收消息过程是：接收一个消息后消息队列的头链表消息被转移到了空闲消息链表中，其源码实现具体见代码清单：这个rt_mq_recv()函数用于读取指定队列中的数据，并将获取的数据存储到buffer 指定的地址。要读取的数据的地址和大小为size，由用户定义，具体使用实例见代码：</p>
+<p>当消息队列中有消息时，接收线程才能接收到消息，接收消息是有阻塞机制的，用户可以自定义等待时间，RT-Thread 的接收消息过程是：接收一个消息后消息队列的头链表消息被转移到了空闲消息链表中，其源码实现具体见代码清单：这个<strong>rt_mq_recv()函数</strong>用于读取指定队列中的数据，并将获取的数据存储到buffer 指定的地址。要读取的数据的地址和大小为size，由用户定义，具体使用实例见代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/* 队列读取（接收），等待时间为一直等待 */</span></span><br><span class="line"><span class="number">2</span> uwRet = rt_mq_recv(test_mq, <span class="comment">/* 读取（接收）队列的ID(句柄) */</span></span><br><span class="line"><span class="number">3</span> &amp;r_queue, <span class="comment">/* 读取（接收）的数据保存位置 */</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">sizeof</span>(r_queue), <span class="comment">/* 读取（接收）的数据的长度 */</span></span><br><span class="line"><span class="number">5</span> RT_WAITING_FOREVER); <span class="comment">/* 等待时间：一直等 */</span></span><br><span class="line"><span class="number">6</span> <span class="keyword">if</span> (RT_EOK == uwRet)</span><br><span class="line"><span class="number">7</span> &#123;</span><br><span class="line"><span class="number">8</span> rt_kprintf(<span class="string">"本次接收到的数据是：%d\n"</span>,r_queue);</span><br><span class="line"><span class="number">9</span> &#125; <span class="keyword">else</span></span><br><span class="line"><span class="number">10</span> &#123;</span><br><span class="line"><span class="number">11</span> rt_kprintf(<span class="string">"数据接收出错,错误代码: 0x%lx\n"</span>,uwRet);</span><br><span class="line"><span class="number">12</span> &#125;</span><br></pre></td></tr></table></figure>
 
 <p>在使用RT-Thread 提供的消息队列函数的时候，需要了解以下几点：</p>
 <ol>
 <li>使用rt_mq_recv()、rt_mq_send()、rt_mq_delete()等这些函数之前应先创建需消息队列，并根据队列句柄进行操作。</li>
-<li>队列读取采用的是先进先出（FIFO）模式，会首先读取出首先存储在队列中的数据。当然也有例外，RT-Thread 给我们提供了另一个函数，可以发送紧急消息的，那么读取的时候就会读取到紧急消息的数据。</li>
+<li>队列读取采用的是<strong>先进先出</strong>（FIFO）模式，会首先读取出首先存储在队列中的数据。当然也有例外，RT-Thread 给我们提供了另一个函数，可以发送紧急消息的，那么读取的时候就会读取到紧急消息的数据。</li>
 <li>必须要我们定义一个<strong>存储读取出来</strong>的数据的地方，并且把存储数据的起始地址传递给 rt_mq_recv()函数，否则，将发生地址非法的错误。</li>
 <li>接收消息队列中的消息是拷贝的方式，读取消息时候定义的地址必须保证能存放下即将读取消息的大小。</li>
 </ol>
@@ -472,7 +472,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">BLE协议栈</a>
+                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -480,7 +480,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">BLE协议栈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,10 +493,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">研电赛</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
             
             <div class="clearfix"></div>
