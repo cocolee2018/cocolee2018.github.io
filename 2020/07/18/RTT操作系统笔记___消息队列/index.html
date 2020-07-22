@@ -16,7 +16,7 @@
 <meta property="og:description" content="消息队列（message queue）是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：  消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。 队列支持超时机制。 支持发送紧急消息，这里的紧急消息是往队列头发送消息。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T04:39:00.000Z">
-<meta property="article:modified_time" content="2020-07-21T04:44:10.429Z">
+<meta property="article:modified_time" content="2020-07-22T01:31:36.668Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="消息队列">
 <meta name="twitter:card" content="summary">
@@ -185,7 +185,7 @@
 <li>队列支持超时机制。</li>
 <li>支持发送紧急消息，这里的紧急消息是往队列头发送消息。<a id="more"></a> </li>
 </ul>
-<p><strong>创建消息队列</strong>时先创建一个消息队列对象控制块，然后给消息队列分配一块内存空间，组织成空闲消息链表。消息队列创建函数rt_mq_create()；消息队列创建函数rt_mq_create()实例；</p>
+<p><strong>创建消息队列</strong>时先创建一个消息队列对象控制块，然后给消息队列分配一块内存空间，组织成空闲消息链表。消息队列创建函数rt_mq_create()；消息队列创建函数rt_mq_create()实例：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">rt_mq_t</span> <span class="title">rt_mq_create</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">2</span> <span class="keyword">rt_size_t</span> msg_size,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">3</span> <span class="keyword">rt_size_t</span> max_msgs,</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">4</span> <span class="keyword">rt_uint8_t</span> flag)</span>    <span class="comment">//函数源码</span></span></span><br><span class="line"><span class="function">5 <span class="comment">/* 创建一个消息队列 */</span></span></span><br><span class="line"><span class="function">6 test_mq </span>= rt_mq_create(<span class="string">"test_mq"</span>, <span class="comment">/* 消息队列名字 */</span></span><br><span class="line"><span class="number">7</span>	 <span class="number">40</span>, <span class="comment">/* 消息的最大长度 */</span></span><br><span class="line"><span class="number">8</span> 	<span class="number">20</span>, <span class="comment">/* 消息队列的最大容量 */</span></span><br><span class="line"><span class="number">9</span> 	RT_IPC_FLAG_FIFO);<span class="comment">/* 队列模式 FIFO(0x00)*/</span></span><br><span class="line"><span class="number">10</span> 	<span class="keyword">if</span> (test_mq != RT_NULL)</span><br><span class="line"><span class="number">11</span> rt_kprintf(<span class="string">"消息队列创建成功！\n\n"</span>);</span><br></pre></td></tr></table></figure>
 
 <p>应用场景：消息队列可以应用于发送不定长消息的场合，包括线程与线程间的消息交换，以及在中断服务函数中给线程发送消息。</p>
