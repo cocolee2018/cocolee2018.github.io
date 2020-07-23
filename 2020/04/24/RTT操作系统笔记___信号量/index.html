@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/RTT%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0___%E4%BF%A1%E5%8F%B7%E9%87%8F/4.png">
 <meta property="article:published_time" content="2020-04-24T13:09:00.000Z">
-<meta property="article:modified_time" content="2020-07-21T03:13:45.138Z">
+<meta property="article:modified_time" content="2020-07-23T10:18:40.707Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="RT-Thread">
 <meta name="twitter:card" content="summary">
@@ -200,8 +200,8 @@
 <p>二值信号量的创建很简单，因为创建的是二值的信号量，所以该信号量的容量只有一个，其可用信号量个数要么是0，要么是1，而计数信号量则可以由用户决定在创建的时候初始化多少个可用信号量，其源码具体见代码清单：信号量创建函数rt_sem_create()源码部分：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="function"><span class="keyword">rt_sem_t</span> <span class="title">rt_sem_create</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, (<span class="number">1</span>)</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">2</span> <span class="keyword">rt_uint32_t</span> value, (<span class="number">2</span>)</span></span></span><br><span class="line"><span class="function"><span class="params"><span class="number">3</span> <span class="keyword">rt_uint8_t</span> flag)</span> <span class="params">(<span class="number">3</span>)</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span> <span class="keyword">rt_sem_t</span> sem;</span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span> RT_DEBUG_NOT_IN_INTERRUPT;</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span> <span class="comment">/* 分配内核对象 */</span></span><br><span class="line"><span class="number">10</span> sem = (<span class="keyword">rt_sem_t</span>)rt_object_allocate(RT_Object_Class_Semaphore, name);</span><br><span class="line"><span class="number">11</span> <span class="keyword">if</span> (sem == RT_NULL) (<span class="number">4</span>)</span><br><span class="line"><span class="number">12</span> <span class="keyword">return</span> sem;</span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span> <span class="comment">/* 初始化信号量对象 */</span></span><br><span class="line"><span class="number">15</span> rt_ipc_object_init(&amp;(sem-&gt;parent)); (<span class="number">5</span>)</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">17</span> <span class="comment">/* 设置可用信号量的值 */</span></span><br><span class="line"><span class="number">18</span> sem-&gt;value = value; (<span class="number">6</span>)</span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">20</span> <span class="comment">/* 设置信号量模式 */</span></span><br><span class="line"><span class="number">21</span> sem-&gt;parent.parent.flag = flag; (<span class="number">7</span>)</span><br><span class="line"><span class="number">22</span></span><br><span class="line"><span class="number">23</span> <span class="keyword">return</span> sem; (<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
 
-<p>代码清单 19-2(1)：信号量名称。<br>代码清单 19-2(2)：可用信号量初始值。<br>代码清单 19-2(3)：信号量标志。<br>代码清单 19-2(4)：分配消息队列对象，调用rt_object_allocate 此函数将从对象系统分配对象，为创建的消息队列分配一个消息队列的对象，并且命名对象名称， 在系统中，对象的名称必须是唯一的。<br>代码清单 19-2(5)：初始化信号量对象。此处会初始化一个链表用于记录访问此信号量而阻塞的线程。</p>
-<p>代码清单 19-2(6)：设置可用信号量的初始值。表示在创建成功的时候有多少个信号量可用，如果创建的是二值信号量，其取值范围为[0,1]，如果是计数信号量，其取值范围为[0,65535]。<br>代码清单 19-2(7)：设置信号量的阻塞唤醒模式，创建的信号量由于指定的flag 不同，而有不同的意义： 使用RT_IPC_FLAG_PRIO 优先级flag 创建的IPC 对象，在多个线程等待信号量资源时，将由优先级高的线程优先获得资源。而使用RT_IPC_FLAG_FIFO 先进先出flag 创建的IPC 对象，在多个线程等信号量待资源时，将按照先来先得的顺序获得资源。RT_IPC_FLAG_PRIO 与RT_IPC_FLAG_FIFO 均在rtdef.h 中有定义.</p>
+<p>代码清单 19-2(1)：信号量名称。<br>代码清单 19-2(2)：可用信号量初始值。<br>代码清单 19-2(3)：信号量标志。<br>代码清单 19-2(4)：分配消息队列对象，调用rt_object_allocate 此函数将从对象系统分配对象，为创建的消息队列分配一个消息队列的对象，并且命名对象名称， 在系统中，对象的名称必须是唯一的。<br>代码清单 19-2(5)：初始化信号量对象，此处会初始化一个链表用于记录访问此信号量而阻塞的线程。</p>
+<p>代码清单 19-2(6)：设置可用信号量的初始值。表示在创建成功的时候有多少个信号量可用，如果创建的是二值信号量，其取值范围为[0,1]，如果是计数信号量，其取值范围为[0,65535]。<br>代码清单 19-2(7)：设置信号量的阻塞唤醒模式，创建的信号量由于指定的flag 不同，而有不同的意义： 使用RT_IPC_FLAG_PRIO 优先级flag 创建的IPC 对象，在多个线程等待信号量资源时，将由优先级高的线程优先获得资源。而使用RT_IPC_FLAG_FIFO 先进先出flag 创建的IPC 对象，在多个线程等信号量待资源时，将按照先来先得的顺序获得资源。RT_IPC_FLAG_PRIO 与RT_IPC_FLAG_FIFO 均在rtdef.h 中有定义。</p>
 <p>代码清单 19-2(8)：创建成功返回信号量句柄。通过上面的信号量创建的学习，在创建信号量的时候，我们只需要传入我们的信号量名称、初始化的值和阻塞唤醒发生即可。</p>
 
       
@@ -490,15 +490,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">BLE</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -506,11 +502,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">简历</a>
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">研电赛</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">简历</a>
               </li>
             
             <div class="clearfix"></div>
