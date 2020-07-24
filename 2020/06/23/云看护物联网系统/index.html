@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/777.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/8.png">
 <meta property="article:published_time" content="2020-06-23T13:54:00.000Z">
-<meta property="article:modified_time" content="2020-07-20T10:14:57.948Z">
+<meta property="article:modified_time" content="2020-07-24T10:29:40.381Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="研电赛">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
 <p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/4.png" alt="4"></p>
 <p>来看一下实物图，</p>
 <p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/34.jpg" alt="34"></p>
-<p>哈哈哈，有没有很失望，本来打算使用亚克力封装一下，由于当时时间太紧了，参加完赛事，还有其他项目对接。反正终端这块最后就这样子。剩下主要是云平台后台的优化和测试，这方面工作我做的比较少，大部分师兄在完成。下面就简单介绍下</p>
+<p>哈哈哈，有没有很失望，本来打算使用亚克力封装一下，由于当时时间太紧了，参加完赛事，还有其他项目对接。反正终端这块最后就这样子。剩下主要是云平台后台的优化和测试，这方面工作我做的比较少，大部分师兄在完成。下面就简单介绍下。</p>
 <h5 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h5><p>整个项目采用Java生态体系，使用EMQ作为消息中间件（MQ消息处理层），核心业务层使用SpringBoot开发，所以附带了与生俱来的分布式特点，同时数据库采用了MySQL，支持Redis缓存，减轻了服务器对资源的存储压力。业务逻辑层使用了Java WEB框架生态体系SpringFrameWork ，包含了：SpringBoot、SpringMVC、SpringSession和SpringSecurity。 MQ消息处理层主要处理终端传感器上报的MQTT协议消息，MQTT（Message Queuing Telemetry Transport 消息队列遥测传输协议）是一种基于发布/订阅模式的”轻量级”通讯协议，该协议构建于TCP/IP基础上，作为一种低开销、低带宽占用的即时通讯协议，使其在物联网、小型设备和移动应用等方面有较广泛的应用。</p>
 <p>在物联网平台中一个很重要的观念就是组织，所有的设备、用户、数据都是基于组织管理的[12]。用户是基于一个组织下的人员构成，每个组织下面都有管理员角色，管理员可以为其服务的组织添加不同的用户，并分配每个用户不同的权限。如设备的浏览权限可以控制不同用户是否能看到这个设备，设备数据浏览权限可以控制不同用户能否查看某一设备的运行数据：</p>
 <p><img src="/2020/06/23/%E4%BA%91%E7%9C%8B%E6%8A%A4%E7%89%A9%E8%81%94%E7%BD%91%E7%B3%BB%E7%BB%9F/5.png" alt="5"></p>
