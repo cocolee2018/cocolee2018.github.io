@@ -16,7 +16,7 @@
 <meta property="og:description" content="消息队列（message queue）是一种常用于线程间通信的数据结构，当队列中有新消息时，挂起的读取线程被唤醒并处理新消息，消息队列是一种异步的通信方式。RT-Thread 中使用队列数据结构实现线程异步通信工作，具有如下特性：  消息支持先进先出方式排队与优先级排队方式，支持异步读写工作方式。 队列支持超时机制。 支持发送紧急消息，这里的紧急消息是往队列头发送消息。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-18T04:39:00.000Z">
-<meta property="article:modified_time" content="2020-07-22T01:31:36.668Z">
+<meta property="article:modified_time" content="2020-07-27T07:13:00.977Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="消息队列">
 <meta name="twitter:card" content="summary">
@@ -201,7 +201,7 @@
 <p>在使用RT-Thread 提供的消息队列函数的时候，需要了解以下几点：</p>
 <ol>
 <li>使用rt_mq_recv()、rt_mq_send()、rt_mq_delete()等这些函数之前应先创建需消息队列，并根据队列句柄进行操作。</li>
-<li>队列读取采用的是<strong>先进先出</strong>（FIFO）模式，会首先读取出首先存储在队列中的数据。当然也有例外，RT-Thread 给我们提供了另一个函数，可以发送紧急消息的，那么读取的时候就会读取到紧急消息的数据。</li>
+<li>队列读取采用的是<strong>先进先出</strong>（FIFO）模式，会首先读取出首先存储在队列中的数据。当然也有例外，RT-Thread 提供了另一个函数，可以发送紧急消息的，那么读取的时候就会读取到紧急消息的数据。</li>
 <li>必须要我们定义一个<strong>存储读取出来</strong>的数据的地方，并且把存储数据的起始地址传递给 rt_mq_recv()函数，否则，将发生地址非法的错误。</li>
 <li>接收消息队列中的消息是拷贝的方式，读取消息时候定义的地址必须保证能存放下即将读取消息的大小。</li>
 </ol>
