@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="Coco的个人站">
 <meta property="og:description" content="1.环境搭建和下载验证ZJ-BlE源码github链接：https:&#x2F;&#x2F;github.com&#x2F;ZJ-TEK&#x2F;ZJ-RT-Thread-NIMBLE-NORDIC 硬件芯片使用的NRF52832，IDE使用的是Keil MDK5。注意：在首次烧写前最好使用Nordic的nRFgoStudio进行Erase all删除,目的是删除芯片原来的协议栈，然后在Keil下使用J-link烧写。抓包可能用到Pa">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/C:%5CUsers%5Clihaoke%5CDesktop%5Ctypora%5CZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88%5C1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/1.png">
 <meta property="article:published_time" content="2020-07-21T13:09:00.000Z">
-<meta property="article:modified_time" content="2020-08-03T09:14:10.947Z">
+<meta property="article:modified_time" content="2020-08-03T12:54:44.464Z">
 <meta property="article:author" content="Coco的个人站">
 <meta property="article:tag" content="BLE">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/C:%5CUsers%5Clihaoke%5CDesktop%5Ctypora%5CZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88%5C1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Coco的个人站" type="application/atom+xml">
   
@@ -195,7 +195,7 @@
 <p>sync同步回调函数：该函数是host全局结构 ble_hs_cfg 的一个成员函数指针，在Host协议栈启动后第一时间被调用。因此在该函数中设置设备使用公有地址，同时设置广播参数，调用 ble_gap_adv_start，开始广播。在执行ble_gap_adv_start函数时，同时设置 GAP 系列事件的回调函数。</p>
 <p>gap_event 事件回调函数：在 gap 事件回调中，分别对连接、断开、广播完成以及订阅事件进行处理。 当手机作为主机，连接设备后，设备收到连接完成事件，停止广播；手机断开的时候，设备收到断开事件，此时继续调用开始广播函数，因此我们能够再次扫描到设备，重新进行连接。 当在手机点击获取数据的图标，设备收到订阅事件，然后复位定时器。定时器以1ms的周期，模拟心率消息，发送通知消息到手机，从而在手机上观察到变化的心率数据。</p>
 <p>4.在controller涉及到的组件，箭头指向被调用的组件</p>
-<p><img src="/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/C:%5CUsers%5Clihaoke%5CDesktop%5Ctypora%5CZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88%5C1.png" alt="1"></p>
+<p><img src="/2020/07/21/ZJ_BLE%E5%8D%8F%E8%AE%AE%E6%A0%88/1.png" alt="1"></p>
 <p>对于controller层常用的几个C文件：</p>
 <ul>
 <li>ble_ll_sched</li>
@@ -493,11 +493,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
+                <a href="javascript:void(0)" class="js-tag color2">BLE协议栈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">BLE协议栈</a>
+                <a href="javascript:void(0)" class="js-tag color5">RT-Thread</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,11 +505,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">研电赛</a>
+                <a href="javascript:void(0)" class="js-tag color3">简历</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">简历</a>
+                <a href="javascript:void(0)" class="js-tag color4">研电赛</a>
               </li>
             
             <div class="clearfix"></div>
